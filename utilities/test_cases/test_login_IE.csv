@@ -1,0 +1,5 @@
+Test_Scenario,User,Password,env,Browser_Code,Browser
+first_test,VillarruelK,Twinl@kes01,BICL_UAT,1,Chrome
+first_test,stewart2,Fall2018,BICL_UAT,1,Chrome
+first_test,VillarruelK,Twinl@kes01,BICL_DEV,1,Chrome
+first_test,stewart2,Fall2018,BICL_DEV,1,Chrome

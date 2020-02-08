@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Test Report</title>
+    <link href="assets/style.css" rel="stylesheet" type="text/css"/></head>
+  <body onLoad="init()">
+    <script>/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+
+function toArray(iter) {
+    if (iter === null) {
+        return null;
+    }
+    return Array.prototype.slice.call(iter);
+}
+
+function find(selector, elem) {
+    if (!elem) {
+        elem = document;
+    }
+    return elem.querySelector(selector);
+}
+
+function find_all(selector, elem) {
+    if (!elem) {
+        elem = document;
+    }
+    return toArray(elem.querySelectorAll(selector));
+}
+
+function sort_column(elem) {
+    toggle_sort_states(elem);
+    var colIndex = toArray(elem.parentNode.childNodes).indexOf(elem);
+    var key;
+    if (elem.classList.contains('numeric')) {
+        key = key_num;
+    } else if (elem.classList.contains('result')) {
+        key = key_result;
+    } else {
+        key = key_alpha;
+    }
+    sort_table(elem, key(colIndex));
+}
+
+function show_all_extras() {
+    find_all('.col-result').forEach(show_extras);
+}
+
+function hide_all_extras() {
+    find_all('.col-result').forEach(hide_extras);
+}
+
+function show_extras(colresult_elem) {
+    var extras = colresult_elem.parentNode.nextElementSibling;
+    var expandcollapse = colresult_elem.firstElementChild;
+    extras.classList.remove("collapsed");
+    expandcollapse.classList.remove("expander");
+    expandcollapse.classList.add("collapser");
+}
+
+function hide_extras(colresult_elem) {
+    var extras = colresult_elem.parentNode.nextElementSibling;
+    var expandcollapse = colresult_elem.firstElementChild;
+    extras.classList.add("collapsed");
+    expandcollapse.classList.remove("collapser");
+    expandcollapse.classList.add("expander");
+}
+
+function show_filters() {
+    var filter_items = document.getElementsByClassName('filter');
+    for (var i = 0; i < filter_items.length; i++)
+        filter_items[i].hidden = false;
+}
+
+function add_collapse() {
+    // Add links for show/hide all
+    var resulttable = find('table#results-table');
+    var showhideall = document.createElement("p");
+    showhideall.innerHTML = '<a href="javascript:show_all_extras()">Show all details</a> / ' +
+                            '<a href="javascript:hide_all_extras()">Hide all details</a>';
+    resulttable.parentElement.insertBefore(showhideall, resulttable);
+
+    // Add show/hide link to each result
+    find_all('.col-result').forEach(function(elem) {
+        var collapsed = get_query_parameter('collapsed') || 'Passed';
+        var extras = elem.parentNode.nextElementSibling;
+        var expandcollapse = document.createElement("span");
+        if (collapsed.includes(elem.innerHTML)) {
+            extras.classList.add("collapsed");
+            expandcollapse.classList.add("expander");
+        } else {
+            expandcollapse.classList.add("collapser");
+        }
+        elem.appendChild(expandcollapse);
+
+        elem.addEventListener("click", function(event) {
+            if (event.currentTarget.parentNode.nextElementSibling.classList.contains("collapsed")) {
+                show_extras(event.currentTarget);
+            } else {
+                hide_extras(event.currentTarget);
+            }
+        });
+    })
+}
+
+function get_query_parameter(name) {
+    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+
+function init () {
+    reset_sort_headers();
+
+    add_collapse();
+
+    show_filters();
+
+    toggle_sort_states(find('.initial-sort'));
+
+    find_all('.sortable').forEach(function(elem) {
+        elem.addEventListener("click",
+                              function(event) {
+                                  sort_column(elem);
+                              }, false)
+    });
+
+};
+
+function sort_table(clicked, key_func) {
+    var rows = find_all('.results-table-row');
+    var reversed = !clicked.classList.contains('asc');
+    var sorted_rows = sort(rows, key_func, reversed);
+    /* Whole table is removed here because browsers acts much slower
+     * when appending existing elements.
+     */
+    var thead = document.getElementById("results-table-head");
+    document.getElementById('results-table').remove();
+    var parent = document.createElement("table");
+    parent.id = "results-table";
+    parent.appendChild(thead);
+    sorted_rows.forEach(function(elem) {
+        parent.appendChild(elem);
+    });
+    document.getElementsByTagName("BODY")[0].appendChild(parent);
+}
+
+function sort(items, key_func, reversed) {
+    var sort_array = items.map(function(item, i) {
+        return [key_func(item), i];
+    });
+    var multiplier = reversed ? -1 : 1;
+
+    sort_array.sort(function(a, b) {
+        var key_a = a[0];
+        var key_b = b[0];
+        return multiplier * (key_a >= key_b ? 1 : -1);
+    });
+
+    return sort_array.map(function(item) {
+        var index = item[1];
+        return items[index];
+    });
+}
+
+function key_alpha(col_index) {
+    return function(elem) {
+        return elem.childNodes[1].childNodes[col_index].firstChild.data.toLowerCase();
+    };
+}
+
+function key_num(col_index) {
+    return function(elem) {
+        return parseFloat(elem.childNodes[1].childNodes[col_index].firstChild.data);
+    };
+}
+
+function key_result(col_index) {
+    return function(elem) {
+        var strings = ['Error', 'Failed', 'Rerun', 'XFailed', 'XPassed',
+                       'Skipped', 'Passed'];
+        return strings.indexOf(elem.childNodes[1].childNodes[col_index].firstChild.data);
+    };
+}
+
+function reset_sort_headers() {
+    find_all('.sort-icon').forEach(function(elem) {
+        elem.parentNode.removeChild(elem);
+    });
+    find_all('.sortable').forEach(function(elem) {
+        var icon = document.createElement("div");
+        icon.className = "sort-icon";
+        icon.textContent = "vvv";
+        elem.insertBefore(icon, elem.firstChild);
+        elem.classList.remove("desc", "active");
+        elem.classList.add("asc", "inactive");
+    });
+}
+
+function toggle_sort_states(elem) {
+    //if active, toggle between asc and desc
+    if (elem.classList.contains('active')) {
+        elem.classList.toggle('asc');
+        elem.classList.toggle('desc');
+    }
+
+    //if inactive, reset all other functions and add ascending active
+    if (elem.classList.contains('inactive')) {
+        reset_sort_headers();
+        elem.classList.remove('inactive');
+        elem.classList.add('active');
+    }
+}
+
+function is_all_rows_hidden(value) {
+  return value.hidden == false;
+}
+
+function filter_table(elem) {
+    var outcome_att = "data-test-result";
+    var outcome = elem.getAttribute(outcome_att);
+    class_outcome = outcome + " results-table-row";
+    var outcome_rows = document.getElementsByClassName(class_outcome);
+
+    for(var i = 0; i < outcome_rows.length; i++){
+        outcome_rows[i].hidden = !elem.checked;
+    }
+
+    var rows = find_all('.results-table-row').filter(is_all_rows_hidden);
+    var all_rows_hidden = rows.length == 0 ? true : false;
+    var not_found_message = document.getElementById("not-found-message");
+    not_found_message.hidden = !all_rows_hidden;
+}
+</script>
+    <h1>report.html</h1>
+    <p>Report generated on 01-Oct-2019 at 12:36:09 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v1.20.0</p>
+    <h2>Environment</h2>
+    <table id="environment">
+      <tr>
+        <td>Packages</td>
+        <td>{&apos;pytest&apos;: &apos;4.4.1&apos;, &apos;py&apos;: &apos;1.8.0&apos;, &apos;pluggy&apos;: &apos;0.9.0&apos;}</td></tr>
+      <tr>
+        <td>Platform</td>
+        <td>Windows-10-10.0.17134-SP0</td></tr>
+      <tr>
+        <td>Plugins</td>
+        <td>{&apos;splinter&apos;: &apos;2.0.1&apos;, &apos;metadata&apos;: &apos;1.8.0&apos;, &apos;html&apos;: &apos;1.20.0&apos;, &apos;cov&apos;: &apos;2.7.1&apos;, &apos;allure-pytest&apos;: &apos;2.6.2&apos;}</td></tr>
+      <tr>
+        <td>Python</td>
+        <td>3.7.3</td></tr></table>
+    <h2>Summary</h2>
+    <p>15 tests ran in 2125.84 seconds. </p>
+    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="passed">11 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="failed">4 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
+    <h2>Results</h2>
+    <table id="results-table">
+      <thead id="results-table-head">
+        <tr>
+          <th class="sortable result initial-sort" col="result">Result</th>
+          <th class="sortable" col="name">Test</th>
+          <th class="sortable numeric" col="duration">Duration</th>
+          <th>Links</th></tr>
+        <tr hidden="true" id="not-found-message">
+          <th colspan="4">No results found. Try to check the filters</th></tr></thead>
+      <tbody class="failed results-table-row">
+        <tr>
+          <td class="col-result">Failed</td>
+          <td class="col-name">tests/test_QTML-T180_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">63.11</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">self = &lt;tests.test_QTML-T180_Chrome.Test_login_Chrome object at 0x0BB0C6F0&gt;, browser = &#x27;Chrome&#x27;, env = &#x27;UAT&#x27;<br/><br/>    @pytest.mark.smoke<br/>    <br/>    def test_login_chrome(self, browser, env):<br/>    <br/>        driver = browser<br/>    <br/>        # Create Time Stamp Variable (using Date Time Generator Class in utilities)<br/>        dg = date_time_generator()<br/>        time_stamp = dg.return_time_stamp()<br/>    <br/>        # CSV Reader<br/>        # Read in username, password and env variables<br/>        with open(csv_directory) as f:<br/>            rows = list(csv.reader(f))<br/>            test_case_ID = rows[36][0]<br/>            test_scenario = rows[36][1]<br/>            username = rows[36][2]<br/>            password = rows[36][3]<br/>            browser = rows[36][4]<br/>            account_number = rows[36][5]<br/>            rep_code = rows[36][6]<br/>            test_data1 = rows[36][7]<br/>            test_data2 = rows[36][8]<br/>            control_point_1 = rows[36][9]<br/>            control_point_2 = rows[36][10]<br/>            control_point_3 = rows[36][11]<br/>            control_point_4 = rows[36][12]<br/>    <br/>        # To DEBUG, Uncomment this NEXT line AND Comment lines 13, 15 and 18. Also, SHIFT + TAB lines 17 - 86 (This will remove indents)<br/>        # driver = webdriver.Chrome(str(CONFIG_PATH / &#x27;chromedriver.exe&#x27;))<br/>    <br/>        ## Select Appropriate URL based on the Environment Value (env)<br/>    <br/>        # env = &quot;UAT&quot;<br/>        baseURL = Environments_BICL.return_environments(env)<br/>    <br/>        driver.get(baseURL)<br/>        driver.maximize_window()<br/>    <br/>        # Search for User Account<br/>    <br/>        time.sleep(5)<br/>    <br/>        # Login to Site<br/>        lp = LoginPage(driver)<br/>    <br/>        # Verify if page loads (username_field should be clickable), if not, throw exception and take screenshot<br/>        try:<br/>            username_field = lp.Page_Elements().driver.find_element_by_id(&quot;UserName&quot;)<br/>            username_field.click()<br/>        except NoSuchElementException:<br/>            screenshot_name = &quot;FAIL&quot; + &quot;_&quot; + test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>            saved_screenshot_location = str(screenshot_directory / screenshot_name)<br/>            driver.get_screenshot_as_file(saved_screenshot_location)<br/>            raise<br/>    <br/>        lp.login(username, password)<br/>        lp.click_login_button()<br/>    <br/>        time.sleep(5)<br/>    <br/>        # Take screenshot, save to utilities/test_results/screenshots<br/>        screenshot_1 = test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + &quot;screenshot_1&quot; + &quot;_&quot; + control_point_1 + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>        saved_screenshot_location_1 = str(screenshot_directory / screenshot_1)<br/>        driver.get_screenshot_as_file(saved_screenshot_location_1)<br/>    <br/>        dp = default_page(driver)<br/>    <br/>        # Timeout method for page to load, timeout set to 30 seconds<br/>        try:<br/>            driver.set_page_load_timeout(30)<br/>        except:<br/>            screenshot_name = &quot;FAIL&quot; + &quot;_&quot; + test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>            saved_screenshot_location = str(screenshot_directory / screenshot_name)<br/>            driver.get_screenshot_as_file(saved_screenshot_location)<br/>            raise<br/>    <br/>        time.sleep(5)<br/>    <br/>        # Validate that Correct Title Displays<br/>    <br/>&gt;       dp.verify_logo_displays(test_data1, test_case_ID, browser, env, time_stamp)<br/><br/>tests\test_QTML-T180_Chrome.py:98: <br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/>pages\BICL\default_page\default_page.py:172: in verify_logo_displays<br/>    image_found = self.driver.find_element(By.XPATH, &quot;/html/body/div[1]/header/div[1]/a/img&quot;)<br/>c:\automation_projects\bicl\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:978: in find_element<br/>    &#x27;value&#x27;: value})[&#x27;value&#x27;]<br/>c:\automation_projects\bicl\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/><br/>self = &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x0BB0CF50&gt;<br/>response = {&#x27;sessionId&#x27;: &#x27;c88e3cebc6fc48d305c9e767de6e016f&#x27;, &#x27;status&#x27;: 7, &#x27;value&#x27;: {&#x27;message&#x27;: &#x27;no such element: Unable to locate...ver info: chromedriver=2.46.628402 (536cd7adbad73a3783fdc2cab92ab2ba7ec361e1),platform=Windows NT 10.0.17134 x86_64)&#x27;}}<br/><br/>    def check_response(self, response):<br/>        &quot;&quot;&quot;<br/>        Checks that a JSON response from the WebDriver does not have an error.<br/>    <br/>        :Args:<br/>         - response - The JSON response from the WebDriver server as a dictionary<br/>           object.<br/>    <br/>        :Raises: If the response contains an error message.<br/>        &quot;&quot;&quot;<br/>        status = response.get(&#x27;status&#x27;, None)<br/>        if status is None or status == ErrorCode.SUCCESS:<br/>            return<br/>        value = None<br/>        message = response.get(&quot;message&quot;, &quot;&quot;)<br/>        screen = response.get(&quot;screen&quot;, &quot;&quot;)<br/>        stacktrace = None<br/>        if isinstance(status, int):<br/>            value_json = response.get(&#x27;value&#x27;, None)<br/>            if value_json and isinstance(value_json, basestring):<br/>                import json<br/>                try:<br/>                    value = json.loads(value_json)<br/>                    if len(value.keys()) == 1:<br/>                        value = value[&#x27;value&#x27;]<br/>                    status = value.get(&#x27;error&#x27;, None)<br/>                    if status is None:<br/>                        status = value[&quot;status&quot;]<br/>                        message = value[&quot;value&quot;]<br/>                        if not isinstance(message, basestring):<br/>                            value = message<br/>                            message = message.get(&#x27;message&#x27;)<br/>                    else:<br/>                        message = value.get(&#x27;message&#x27;, None)<br/>                except ValueError:<br/>                    pass<br/>    <br/>        exception_class = ErrorInResponseException<br/>        if status in ErrorCode.NO_SUCH_ELEMENT:<br/>            exception_class = NoSuchElementException<br/>        elif status in ErrorCode.NO_SUCH_FRAME:<br/>            exception_class = NoSuchFrameException<br/>        elif status in ErrorCode.NO_SUCH_WINDOW:<br/>            exception_class = NoSuchWindowException<br/>        elif status in ErrorCode.STALE_ELEMENT_REFERENCE:<br/>            exception_class = StaleElementReferenceException<br/>        elif status in ErrorCode.ELEMENT_NOT_VISIBLE:<br/>            exception_class = ElementNotVisibleException<br/>        elif status in ErrorCode.INVALID_ELEMENT_STATE:<br/>            exception_class = InvalidElementStateException<br/>        elif status in ErrorCode.INVALID_SELECTOR \<br/>                or status in ErrorCode.INVALID_XPATH_SELECTOR \<br/>                or status in ErrorCode.INVALID_XPATH_SELECTOR_RETURN_TYPER:<br/>            exception_class = InvalidSelectorException<br/>        elif status in ErrorCode.ELEMENT_IS_NOT_SELECTABLE:<br/>            exception_class = ElementNotSelectableException<br/>        elif status in ErrorCode.ELEMENT_NOT_INTERACTABLE:<br/>            exception_class = ElementNotInteractableException<br/>        elif status in ErrorCode.INVALID_COOKIE_DOMAIN:<br/>            exception_class = InvalidCookieDomainException<br/>        elif status in ErrorCode.UNABLE_TO_SET_COOKIE:<br/>            exception_class = UnableToSetCookieException<br/>        elif status in ErrorCode.TIMEOUT:<br/>            exception_class = TimeoutException<br/>        elif status in ErrorCode.SCRIPT_TIMEOUT:<br/>            exception_class = TimeoutException<br/>        elif status in ErrorCode.UNKNOWN_ERROR:<br/>            exception_class = WebDriverException<br/>        elif status in ErrorCode.UNEXPECTED_ALERT_OPEN:<br/>            exception_class = UnexpectedAlertPresentException<br/>        elif status in ErrorCode.NO_ALERT_OPEN:<br/>            exception_class = NoAlertPresentException<br/>        elif status in ErrorCode.IME_NOT_AVAILABLE:<br/>            exception_class = ImeNotAvailableException<br/>        elif status in ErrorCode.IME_ENGINE_ACTIVATION_FAILED:<br/>            exception_class = ImeActivationFailedException<br/>        elif status in ErrorCode.MOVE_TARGET_OUT_OF_BOUNDS:<br/>            exception_class = MoveTargetOutOfBoundsException<br/>        elif status in ErrorCode.JAVASCRIPT_ERROR:<br/>            exception_class = JavascriptException<br/>        elif status in ErrorCode.SESSION_NOT_CREATED:<br/>            exception_class = SessionNotCreatedException<br/>        elif status in ErrorCode.INVALID_ARGUMENT:<br/>            exception_class = InvalidArgumentException<br/>        elif status in ErrorCode.NO_SUCH_COOKIE:<br/>            exception_class = NoSuchCookieException<br/>        elif status in ErrorCode.UNABLE_TO_CAPTURE_SCREEN:<br/>            exception_class = ScreenshotException<br/>        elif status in ErrorCode.ELEMENT_CLICK_INTERCEPTED:<br/>            exception_class = ElementClickInterceptedException<br/>        elif status in ErrorCode.INSECURE_CERTIFICATE:<br/>            exception_class = InsecureCertificateException<br/>        elif status in ErrorCode.INVALID_COORDINATES:<br/>            exception_class = InvalidCoordinatesException<br/>        elif status in ErrorCode.INVALID_SESSION_ID:<br/>            exception_class = InvalidSessionIdException<br/>        elif status in ErrorCode.UNKNOWN_METHOD:<br/>            exception_class = UnknownMethodException<br/>        else:<br/>            exception_class = WebDriverException<br/>        if value == &#x27;&#x27; or value is None:<br/>            value = response[&#x27;value&#x27;]<br/>        if isinstance(value, basestring):<br/>            if exception_class == ErrorInResponseException:<br/>                raise exception_class(response, value)<br/>            raise exception_class(value)<br/>        if message == &quot;&quot; and &#x27;message&#x27; in value:<br/>            message = value[&#x27;message&#x27;]<br/>    <br/>        screen = None<br/>        if &#x27;screen&#x27; in value:<br/>            screen = value[&#x27;screen&#x27;]<br/>    <br/>        stacktrace = None<br/>        if &#x27;stackTrace&#x27; in value and value[&#x27;stackTrace&#x27;]:<br/>            stacktrace = []<br/>            try:<br/>                for frame in value[&#x27;stackTrace&#x27;]:<br/>                    line = self._value_or_default(frame, &#x27;lineNumber&#x27;, &#x27;&#x27;)<br/>                    file = self._value_or_default(frame, &#x27;fileName&#x27;, &#x27;&lt;anonymous&gt;&#x27;)<br/>                    if line:<br/>                        file = &quot;%s:%s&quot; % (file, line)<br/>                    meth = self._value_or_default(frame, &#x27;methodName&#x27;, &#x27;&lt;anonymous&gt;&#x27;)<br/>                    if &#x27;className&#x27; in frame:<br/>                        meth = &quot;%s.%s&quot; % (frame[&#x27;className&#x27;], meth)<br/>                    msg = &quot;    at %s (%s)&quot;<br/>                    msg = msg % (meth, file)<br/>                    stacktrace.append(msg)<br/>            except TypeError:<br/>                pass<br/>        if exception_class == ErrorInResponseException:<br/>            raise exception_class(response, message)<br/>        elif exception_class == UnexpectedAlertPresentException:<br/>            alert_text = None<br/>            if &#x27;data&#x27; in value:<br/>                alert_text = value[&#x27;data&#x27;].get(&#x27;text&#x27;)<br/>            elif &#x27;alert&#x27; in value:<br/>                alert_text = value[&#x27;alert&#x27;].get(&#x27;text&#x27;)<br/>            raise exception_class(message, screen, stacktrace, alert_text)<br/>&gt;       raise exception_class(message, screen, stacktrace)<br/><span class="error">E       selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;/html/body/div[1]/header/div[1]/a/img&quot;}</span><br/><span class="error">E         (Session info: chrome=75.0.3770.80)</span><br/><span class="error">E         (Driver info: chromedriver=2.46.628402 (536cd7adbad73a3783fdc2cab92ab2ba7ec361e1),platform=Windows NT 10.0.17134 x86_64)</span><br/><br/>c:\automation_projects\bicl\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: NoSuchElementException<br/>---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+</div></td></tr></tbody>
+      <tbody class="failed results-table-row">
+        <tr>
+          <td class="col-result">Failed</td>
+          <td class="col-name">tests/test_QTML-T46_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">49.30</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">self = &lt;tests.test_QTML-T46_Chrome.Test_login_Chrome object at 0x00BD5CF0&gt;, browser = &#x27;Chrome&#x27;, env = &#x27;UAT&#x27;<br/><br/>    @pytest.mark.smoke<br/>    <br/>    def test_login_chrome(self, browser, env):<br/>    <br/>        driver = browser<br/>    <br/>        # Create Time Stamp Variable (using Date Time Generator Class in utilities)<br/>        dg = date_time_generator()<br/>        time_stamp = dg.return_time_stamp()<br/>    <br/>        # CSV Reader<br/>        # Read in username, password and env variables<br/>        with open(csv_directory) as f:<br/>            rows = list(csv.reader(f))<br/>            test_case_ID = rows[6][0]<br/>            test_scenario = rows[6][1]<br/>            username = rows[6][2]<br/>            password = rows[6][3]<br/>            browser = rows[6][4]<br/>            account_number = rows[6][5]<br/>            rep_code = rows[6][6]<br/>            test_data1 = rows[6][7]<br/>            test_data2 = rows[6][8]<br/>            control_point_1 = rows[6][9]<br/>            control_point_2 = rows[6][10]<br/>            control_point_3 = rows[6][11]<br/>            control_point_4 = rows[6][12]<br/>    <br/>    <br/>        # To DEBUG, Uncomment this NEXT line AND Comment lines 13, 15 and 18. Also, SHIFT + TAB lines 17 - 86 (This will remove indents)<br/>        # driver = webdriver.Chrome(str(CONFIG_PATH / &#x27;chromedriver.exe&#x27;))<br/>    <br/>        ## Select Appropriate URL based on the Environment Value (env)<br/>    <br/>        # env = &quot;BICL_UAT&quot;<br/>        baseURL = Environments_BICL.return_environments(env)<br/>        # baseURL = &quot;https://beta.bi.dev.wedbus.com&quot;<br/>    <br/>        driver.get(baseURL)<br/>        driver.maximize_window()<br/>    <br/>        time.sleep(5)<br/>    <br/>        # Login to Site<br/>        lp = LoginPage(driver)<br/>    <br/>        # Verify if page loads (username_field should be clickable), if not, throw exception and take screenshot<br/>        try:<br/>            username_field = lp.Page_Elements().driver.find_element_by_id(&quot;UserName&quot;)<br/>            username_field.click()<br/>        except NoSuchElementException:<br/>            screenshot_name = &quot;FAIL&quot; + &quot;_&quot; + test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>            saved_screenshot_location = str(screenshot_directory / screenshot_name)<br/>            driver.get_screenshot_as_file(saved_screenshot_location)<br/>            raise<br/>    <br/>        lp.login(username, password)<br/>        lp.click_login_button()<br/>    <br/>        time.sleep(10)<br/>    <br/>        # Take screenshot after login and save to utilities/test_results/screenshots<br/>        screenshot_1 = test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + &quot;screenshot_1&quot; + &quot;_&quot; + control_point_1 + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>        saved_screenshot_location_1 = str(screenshot_directory / screenshot_1)<br/>        driver.get_screenshot_as_file(saved_screenshot_location_1)<br/>    <br/>        dp = default_page(driver)<br/>    <br/>        # Timeout method for page to load, timeout set to 30 seconds<br/>        try:<br/>            driver.set_page_load_timeout(30)<br/>        except:<br/>            screenshot_name = &quot;FAIL&quot; + &quot;_&quot; + test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>            saved_screenshot_location = str(screenshot_directory / screenshot_name)<br/>            driver.get_screenshot_as_file(saved_screenshot_location)<br/>            raise<br/>    <br/>        time.sleep(10)<br/>    <br/>        # Enter Account Number and click Search<br/>        dp.enter_account_number_search(account_number)<br/>    <br/>        time.sleep(5)<br/>    <br/>        # Verify if account icon can be clicked, if not, throw exception and take screenshot<br/>        try:<br/>            account_icon = dp.Page_Elements().driver.find_element_by_xpath(<br/>                &quot;/html/body/div[1]/aside/div/div[2]/ul/li[1]/a/i&quot;)<br/>            account_icon.click()<br/>            driver.set_page_load_timeout(30)<br/>        except NoSuchElementException:<br/>            screenshot_name = &quot;FAIL&quot; + &quot;_&quot; + test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>            saved_screenshot_location = str(screenshot_directory / screenshot_name)<br/>            driver.get_screenshot_as_file(saved_screenshot_location)<br/>            raise<br/>    <br/>        # Navigate to Account Info Panel using URL String<br/>    <br/>        current_url = driver.current_url<br/>        slashparts = current_url.split(&#x27;/&#x27;)<br/>    <br/>        bbu = build_base_url()<br/>        home_index_string = bbu.return_home_index_string()<br/>        nav_url = &#x27;/&#x27;.join(slashparts[:3]) + home_index_string<br/>    <br/>        screen_to_navigate_to_1 = &quot;account_account_info&quot;<br/>        screen_1 = Screens.return_screens(screen_to_navigate_to_1)<br/>        nav_string_1 = nav_url + screen_1<br/>    <br/>        driver.get(nav_string_1)<br/>    <br/>        # dp.click_account_info_button()<br/>    <br/>        time.sleep(10)<br/>    <br/>        ai = account_info(driver)<br/>    <br/>        # Account Info Screen<br/>    <br/>        # Select &quot;Documents&quot; from VIEW Drop Down<br/>&gt;       ai.select_documents()<br/><br/>tests\test_QTML-T46_Chrome.py:140: <br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/>pages\BICL\account_info\account_info.py:22: in select_documents<br/>    actions.move_to_element(self.driver.find_element(By.XPATH, &quot;/html/body/div[1]/div[3]/div/div/ui-view/div/div[2]/div[1]/form/div[1]/select&quot;)).click().perform()<br/>c:\automation_projects\bicl\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:978: in find_element<br/>    &#x27;value&#x27;: value})[&#x27;value&#x27;]<br/>c:\automation_projects\bicl\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/><br/>self = &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x04470390&gt;<br/>response = {&#x27;sessionId&#x27;: &#x27;d358973b6cb5a8611dfa1d83ae013059&#x27;, &#x27;status&#x27;: 7, &#x27;value&#x27;: {&#x27;message&#x27;: &#x27;no such element: Unable to locate...ver info: chromedriver=2.46.628402 (536cd7adbad73a3783fdc2cab92ab2ba7ec361e1),platform=Windows NT 10.0.17134 x86_64)&#x27;}}<br/><br/>    def check_response(self, response):<br/>        &quot;&quot;&quot;<br/>        Checks that a JSON response from the WebDriver does not have an error.<br/>    <br/>        :Args:<br/>         - response - The JSON response from the WebDriver server as a dictionary<br/>           object.<br/>    <br/>        :Raises: If the response contains an error message.<br/>        &quot;&quot;&quot;<br/>        status = response.get(&#x27;status&#x27;, None)<br/>        if status is None or status == ErrorCode.SUCCESS:<br/>            return<br/>        value = None<br/>        message = response.get(&quot;message&quot;, &quot;&quot;)<br/>        screen = response.get(&quot;screen&quot;, &quot;&quot;)<br/>        stacktrace = None<br/>        if isinstance(status, int):<br/>            value_json = response.get(&#x27;value&#x27;, None)<br/>            if value_json and isinstance(value_json, basestring):<br/>                import json<br/>                try:<br/>                    value = json.loads(value_json)<br/>                    if len(value.keys()) == 1:<br/>                        value = value[&#x27;value&#x27;]<br/>                    status = value.get(&#x27;error&#x27;, None)<br/>                    if status is None:<br/>                        status = value[&quot;status&quot;]<br/>                        message = value[&quot;value&quot;]<br/>                        if not isinstance(message, basestring):<br/>                            value = message<br/>                            message = message.get(&#x27;message&#x27;)<br/>                    else:<br/>                        message = value.get(&#x27;message&#x27;, None)<br/>                except ValueError:<br/>                    pass<br/>    <br/>        exception_class = ErrorInResponseException<br/>        if status in ErrorCode.NO_SUCH_ELEMENT:<br/>            exception_class = NoSuchElementException<br/>        elif status in ErrorCode.NO_SUCH_FRAME:<br/>            exception_class = NoSuchFrameException<br/>        elif status in ErrorCode.NO_SUCH_WINDOW:<br/>            exception_class = NoSuchWindowException<br/>        elif status in ErrorCode.STALE_ELEMENT_REFERENCE:<br/>            exception_class = StaleElementReferenceException<br/>        elif status in ErrorCode.ELEMENT_NOT_VISIBLE:<br/>            exception_class = ElementNotVisibleException<br/>        elif status in ErrorCode.INVALID_ELEMENT_STATE:<br/>            exception_class = InvalidElementStateException<br/>        elif status in ErrorCode.INVALID_SELECTOR \<br/>                or status in ErrorCode.INVALID_XPATH_SELECTOR \<br/>                or status in ErrorCode.INVALID_XPATH_SELECTOR_RETURN_TYPER:<br/>            exception_class = InvalidSelectorException<br/>        elif status in ErrorCode.ELEMENT_IS_NOT_SELECTABLE:<br/>            exception_class = ElementNotSelectableException<br/>        elif status in ErrorCode.ELEMENT_NOT_INTERACTABLE:<br/>            exception_class = ElementNotInteractableException<br/>        elif status in ErrorCode.INVALID_COOKIE_DOMAIN:<br/>            exception_class = InvalidCookieDomainException<br/>        elif status in ErrorCode.UNABLE_TO_SET_COOKIE:<br/>            exception_class = UnableToSetCookieException<br/>        elif status in ErrorCode.TIMEOUT:<br/>            exception_class = TimeoutException<br/>        elif status in ErrorCode.SCRIPT_TIMEOUT:<br/>            exception_class = TimeoutException<br/>        elif status in ErrorCode.UNKNOWN_ERROR:<br/>            exception_class = WebDriverException<br/>        elif status in ErrorCode.UNEXPECTED_ALERT_OPEN:<br/>            exception_class = UnexpectedAlertPresentException<br/>        elif status in ErrorCode.NO_ALERT_OPEN:<br/>            exception_class = NoAlertPresentException<br/>        elif status in ErrorCode.IME_NOT_AVAILABLE:<br/>            exception_class = ImeNotAvailableException<br/>        elif status in ErrorCode.IME_ENGINE_ACTIVATION_FAILED:<br/>            exception_class = ImeActivationFailedException<br/>        elif status in ErrorCode.MOVE_TARGET_OUT_OF_BOUNDS:<br/>            exception_class = MoveTargetOutOfBoundsException<br/>        elif status in ErrorCode.JAVASCRIPT_ERROR:<br/>            exception_class = JavascriptException<br/>        elif status in ErrorCode.SESSION_NOT_CREATED:<br/>            exception_class = SessionNotCreatedException<br/>        elif status in ErrorCode.INVALID_ARGUMENT:<br/>            exception_class = InvalidArgumentException<br/>        elif status in ErrorCode.NO_SUCH_COOKIE:<br/>            exception_class = NoSuchCookieException<br/>        elif status in ErrorCode.UNABLE_TO_CAPTURE_SCREEN:<br/>            exception_class = ScreenshotException<br/>        elif status in ErrorCode.ELEMENT_CLICK_INTERCEPTED:<br/>            exception_class = ElementClickInterceptedException<br/>        elif status in ErrorCode.INSECURE_CERTIFICATE:<br/>            exception_class = InsecureCertificateException<br/>        elif status in ErrorCode.INVALID_COORDINATES:<br/>            exception_class = InvalidCoordinatesException<br/>        elif status in ErrorCode.INVALID_SESSION_ID:<br/>            exception_class = InvalidSessionIdException<br/>        elif status in ErrorCode.UNKNOWN_METHOD:<br/>            exception_class = UnknownMethodException<br/>        else:<br/>            exception_class = WebDriverException<br/>        if value == &#x27;&#x27; or value is None:<br/>            value = response[&#x27;value&#x27;]<br/>        if isinstance(value, basestring):<br/>            if exception_class == ErrorInResponseException:<br/>                raise exception_class(response, value)<br/>            raise exception_class(value)<br/>        if message == &quot;&quot; and &#x27;message&#x27; in value:<br/>            message = value[&#x27;message&#x27;]<br/>    <br/>        screen = None<br/>        if &#x27;screen&#x27; in value:<br/>            screen = value[&#x27;screen&#x27;]<br/>    <br/>        stacktrace = None<br/>        if &#x27;stackTrace&#x27; in value and value[&#x27;stackTrace&#x27;]:<br/>            stacktrace = []<br/>            try:<br/>                for frame in value[&#x27;stackTrace&#x27;]:<br/>                    line = self._value_or_default(frame, &#x27;lineNumber&#x27;, &#x27;&#x27;)<br/>                    file = self._value_or_default(frame, &#x27;fileName&#x27;, &#x27;&lt;anonymous&gt;&#x27;)<br/>                    if line:<br/>                        file = &quot;%s:%s&quot; % (file, line)<br/>                    meth = self._value_or_default(frame, &#x27;methodName&#x27;, &#x27;&lt;anonymous&gt;&#x27;)<br/>                    if &#x27;className&#x27; in frame:<br/>                        meth = &quot;%s.%s&quot; % (frame[&#x27;className&#x27;], meth)<br/>                    msg = &quot;    at %s (%s)&quot;<br/>                    msg = msg % (meth, file)<br/>                    stacktrace.append(msg)<br/>            except TypeError:<br/>                pass<br/>        if exception_class == ErrorInResponseException:<br/>            raise exception_class(response, message)<br/>        elif exception_class == UnexpectedAlertPresentException:<br/>            alert_text = None<br/>            if &#x27;data&#x27; in value:<br/>                alert_text = value[&#x27;data&#x27;].get(&#x27;text&#x27;)<br/>            elif &#x27;alert&#x27; in value:<br/>                alert_text = value[&#x27;alert&#x27;].get(&#x27;text&#x27;)<br/>            raise exception_class(message, screen, stacktrace, alert_text)<br/>&gt;       raise exception_class(message, screen, stacktrace)<br/><span class="error">E       selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;/html/body/div[1]/div[3]/div/div/ui-view/div/div[2]/div[1]/form/div[1]/select&quot;}</span><br/><span class="error">E         (Session info: chrome=75.0.3770.80)</span><br/><span class="error">E         (Driver info: chromedriver=2.46.628402 (536cd7adbad73a3783fdc2cab92ab2ba7ec361e1),platform=Windows NT 10.0.17134 x86_64)</span><br/><br/>c:\automation_projects\bicl\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: NoSuchElementException<br/>---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+</div></td></tr></tbody>
+      <tbody class="failed results-table-row">
+        <tr>
+          <td class="col-result">Failed</td>
+          <td class="col-name">tests/test_QTML-T51_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">183.71</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">self = &lt;tests.test_QTML-T51_Chrome.Test_login_Chrome object at 0x00949B30&gt;, browser = &#x27;Chrome&#x27;, env = &#x27;UAT&#x27;<br/><br/>    @pytest.mark.smoke<br/>    <br/>    def test_login_chrome(self, browser, env):<br/>    <br/>        driver = browser<br/>    <br/>        # Create Time Stamp Variable (using Date Time Generator Class in utilities)<br/>        dg = date_time_generator()<br/>        time_stamp = dg.return_time_stamp()<br/>    <br/>        # Create a valid date (1 month ago)<br/>        date_previous_month = dg.return_date_one_month_ago()<br/>        dv = date_validator()<br/>        valid_date = dv.return_valid_date(date_previous_month).strftime(&quot;%m-%d-%Y&quot;)<br/>    <br/>        # CSV Reader<br/>        # Read in username, password and env variables<br/>        with open(csv_directory) as f:<br/>            rows = list(csv.reader(f))<br/>            test_case_ID = rows[11][0]<br/>            test_scenario = rows[11][1]<br/>            username = rows[11][2]<br/>            password = rows[11][3]<br/>            browser = rows[11][4]<br/>            account_number = rows[11][5]<br/>            rep_code = rows[11][6]<br/>            test_data1 = rows[11][7]<br/>            test_data2 = rows[11][8]<br/>            control_point_1 = rows[11][9]<br/>            control_point_2 = rows[11][10]<br/>            control_point_3 = rows[11][11]<br/>            control_point_4 = rows[11][12]<br/>    <br/>        # To DEBUG, Uncomment this NEXT line AND Comment lines 13, 15 and 18. Also, SHIFT + TAB lines 17 - 86 (This will remove indents)<br/>        # driver = webdriver.Chrome(str(CONFIG_PATH / &#x27;chromedriver.exe&#x27;))<br/>    <br/>        ## Select Appropriate URL based on the Environment Value (env)<br/>    <br/>        # env = &quot;UAT&quot;<br/>        baseURL = Environments_BICL.return_environments(env)<br/>        # baseURL = &quot;https://beta.bi.dev.wedbus.com&quot;<br/>    <br/>        driver.get(baseURL)<br/>        driver.maximize_window()<br/>    <br/>        time.sleep(5)<br/>    <br/>        # Login to Site<br/>        lp = LoginPage(driver)<br/>    <br/>        # Verify if page loads (username_field should be clickable), if not, throw exception and take screenshot<br/>        try:<br/>            username_field = lp.Page_Elements().driver.find_element_by_id(&quot;UserName&quot;)<br/>            username_field.click()<br/>        except NoSuchElementException:<br/>            screenshot_name = &quot;FAIL&quot; + &quot;_&quot; + test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>            saved_screenshot_location = str(screenshot_directory / screenshot_name)<br/>            driver.get_screenshot_as_file(saved_screenshot_location)<br/>            raise<br/>    <br/>        lp.login(username, password)<br/>        lp.click_login_button()<br/>    <br/>        time.sleep(10)<br/>    <br/>        # Take screenshot after login and save to utilities/test_results/screenshots<br/>        screenshot_1 = test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + &quot;screenshot_1&quot; + &quot;_&quot; + control_point_1 + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>        saved_screenshot_location_1 = str(screenshot_directory / screenshot_1)<br/>        driver.get_screenshot_as_file(saved_screenshot_location_1)<br/>    <br/>        dp = default_page(driver)<br/>    <br/>        # Timeout method for page to load, timeout set to 30 seconds<br/>        try:<br/>            driver.set_page_load_timeout(30)<br/>        except:<br/>            screenshot_name = &quot;FAIL&quot; + &quot;_&quot; + test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>            saved_screenshot_location = str(screenshot_directory / screenshot_name)<br/>            driver.get_screenshot_as_file(saved_screenshot_location)<br/>            raise<br/>    <br/>        time.sleep(10)<br/>    <br/>        # Enter Account Number and click Search<br/>        dp.enter_account_number_search(account_number)<br/>    <br/>        time.sleep(5)<br/>    <br/>        # Verify if account icon can be clicked, if not, throw exception and take screenshot<br/>        try:<br/>            account_icon = dp.Page_Elements().driver.find_element_by_xpath(<br/>                &quot;/html/body/div[1]/aside/div/div[2]/ul/li[1]/a/i&quot;)<br/>            account_icon.click()<br/>            driver.set_page_load_timeout(30)<br/>        except NoSuchElementException:<br/>            screenshot_name = &quot;FAIL&quot; + &quot;_&quot; + test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>            saved_screenshot_location = str(screenshot_directory / screenshot_name)<br/>            driver.get_screenshot_as_file(saved_screenshot_location)<br/>            raise<br/>    <br/>        time.sleep(20)<br/>    <br/>        # Click HouseKeeping link<br/>    <br/>        dp.click_housekeeping_icon()<br/>    <br/>        time.sleep(10)<br/>    <br/>        # instantiate housekeeping<br/>        hk = housekeeping(driver)<br/>    <br/>        # Click Documents<br/>        # hk.click_documents()<br/>    <br/>        time.sleep(1)<br/>    <br/>        # instantiate documents<br/>        doc = documents(driver)<br/>    <br/>        # Input Rep Code<br/>        # doc.input_rep_code(rep_code)<br/>    <br/>        time.sleep(5)<br/>    <br/>        # Select GMAP Reports<br/>        # Work Around to Select GMAP Reports<br/>        doc.select_monthly_statements()<br/>    <br/>        time.sleep(5)<br/>    <br/>        doc.click_rep_code()<br/>    <br/>        ms = monthly_statements(driver)<br/>    <br/>        ms.select_month()<br/>    <br/>        time.sleep(5)<br/>    <br/>        # click Search Button<br/>        doc.click_search_button()<br/>    <br/>        # ms.click_document()<br/>    <br/>        time.sleep(5)<br/>    <br/>        # Take screenshot after clicking search button and save to utilities/test_results/screenshots<br/>        screenshot_2 = test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + &quot;screenshot_2&quot; + &quot;_&quot; + control_point_2 + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>        saved_screenshot_location_2 = str(screenshot_directory / screenshot_2)<br/>        driver.get_screenshot_as_file(saved_screenshot_location_2)<br/>    <br/>        time.sleep(20)<br/>    <br/>        errorDisplays = False<br/>    <br/>        # Check if Error Modal Displays<br/>        if len(driver.find_elements(By.XPATH, &quot;/html/body/div[1]/div/div/div/button&quot;)) &gt; 0:<br/>            errorDisplays = True<br/>        else:<br/>            print(&quot;No Error&quot;)<br/>    <br/>        time.sleep(1)<br/>    <br/>        # Try / Except Block to test if errorDisplays False<br/>        # If True, throw exception, take screenshot and FAIL test<br/>    <br/>        try:<br/>            assert errorDisplays is False<br/>        except AssertionError:<br/>            screenshot_name = &quot;FAIL&quot; + &quot;_&quot; + test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>            saved_screenshot_location = str(screenshot_directory / screenshot_name)<br/>            driver.get_screenshot_as_file(saved_screenshot_location)<br/>            raise<br/>    <br/>        time.sleep(15)<br/>    <br/>        # Take screenshot after Display of Document and save to utilities/test_results/screenshots<br/>        screenshot_3 = test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + &quot;screenshot_3&quot; + &quot;_&quot; + control_point_3 + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>        saved_screenshot_location_3 = str(screenshot_directory / screenshot_3)<br/>        driver.get_screenshot_as_file(saved_screenshot_location_3)<br/>    <br/>        time.sleep(25)<br/>    <br/>        # Take screenshot BEFORE logout and save to utilities/test_results/screenshots<br/>        screenshot_4 = test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + &quot;screenshot_4&quot; + &quot;_&quot; + control_point_4 + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>        saved_screenshot_location_4 = str(screenshot_directory / screenshot_4)<br/>        driver.get_screenshot_as_file(saved_screenshot_location_4)<br/>    <br/>        # LOGOUT Section<br/>    <br/>        # Logout<br/>    <br/>        # Force Logout<br/>        # Logout Workaround<br/>        # Get current URL string, find base URL<br/>        # Add logout_string to base_url to force logout<br/>        current_url = driver.current_url<br/>        slashparts = current_url.split(&#x27;/&#x27;)<br/>        # Now join back the first three sections &#x27;http:&#x27;, &#x27;&#x27; and &#x27;example.com&#x27;<br/>        base_url = &#x27;/&#x27;.join(slashparts[:3]) + &#x27;/&#x27;<br/>    <br/>        logout_string = &quot;user/login?logout=1&quot;<br/>        logout_screen = base_url + logout_string<br/>    <br/>        # Navigate to Logout Screen<br/>&gt;       driver.get(logout_screen)<br/><br/>tests\test_QTML-T51_Chrome.py:225: <br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/>c:\automation_projects\bicl\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:333: in get<br/>    self.execute(Command.GET, {&#x27;url&#x27;: url})<br/>c:\automation_projects\bicl\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/><br/>self = &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x00949E90&gt;<br/>response = {&#x27;sessionId&#x27;: &#x27;994589921fe7c2090be5e2762ccaed5e&#x27;, &#x27;status&#x27;: 21, &#x27;value&#x27;: {&#x27;message&#x27;: &#x27;timeout\n  (Session info: chrome...ver info: chromedriver=2.46.628402 (536cd7adbad73a3783fdc2cab92ab2ba7ec361e1),platform=Windows NT 10.0.17134 x86_64)&#x27;}}<br/><br/>    def check_response(self, response):<br/>        &quot;&quot;&quot;<br/>        Checks that a JSON response from the WebDriver does not have an error.<br/>    <br/>        :Args:<br/>         - response - The JSON response from the WebDriver server as a dictionary<br/>           object.<br/>    <br/>        :Raises: If the response contains an error message.<br/>        &quot;&quot;&quot;<br/>        status = response.get(&#x27;status&#x27;, None)<br/>        if status is None or status == ErrorCode.SUCCESS:<br/>            return<br/>        value = None<br/>        message = response.get(&quot;message&quot;, &quot;&quot;)<br/>        screen = response.get(&quot;screen&quot;, &quot;&quot;)<br/>        stacktrace = None<br/>        if isinstance(status, int):<br/>            value_json = response.get(&#x27;value&#x27;, None)<br/>            if value_json and isinstance(value_json, basestring):<br/>                import json<br/>                try:<br/>                    value = json.loads(value_json)<br/>                    if len(value.keys()) == 1:<br/>                        value = value[&#x27;value&#x27;]<br/>                    status = value.get(&#x27;error&#x27;, None)<br/>                    if status is None:<br/>                        status = value[&quot;status&quot;]<br/>                        message = value[&quot;value&quot;]<br/>                        if not isinstance(message, basestring):<br/>                            value = message<br/>                            message = message.get(&#x27;message&#x27;)<br/>                    else:<br/>                        message = value.get(&#x27;message&#x27;, None)<br/>                except ValueError:<br/>                    pass<br/>    <br/>        exception_class = ErrorInResponseException<br/>        if status in ErrorCode.NO_SUCH_ELEMENT:<br/>            exception_class = NoSuchElementException<br/>        elif status in ErrorCode.NO_SUCH_FRAME:<br/>            exception_class = NoSuchFrameException<br/>        elif status in ErrorCode.NO_SUCH_WINDOW:<br/>            exception_class = NoSuchWindowException<br/>        elif status in ErrorCode.STALE_ELEMENT_REFERENCE:<br/>            exception_class = StaleElementReferenceException<br/>        elif status in ErrorCode.ELEMENT_NOT_VISIBLE:<br/>            exception_class = ElementNotVisibleException<br/>        elif status in ErrorCode.INVALID_ELEMENT_STATE:<br/>            exception_class = InvalidElementStateException<br/>        elif status in ErrorCode.INVALID_SELECTOR \<br/>                or status in ErrorCode.INVALID_XPATH_SELECTOR \<br/>                or status in ErrorCode.INVALID_XPATH_SELECTOR_RETURN_TYPER:<br/>            exception_class = InvalidSelectorException<br/>        elif status in ErrorCode.ELEMENT_IS_NOT_SELECTABLE:<br/>            exception_class = ElementNotSelectableException<br/>        elif status in ErrorCode.ELEMENT_NOT_INTERACTABLE:<br/>            exception_class = ElementNotInteractableException<br/>        elif status in ErrorCode.INVALID_COOKIE_DOMAIN:<br/>            exception_class = InvalidCookieDomainException<br/>        elif status in ErrorCode.UNABLE_TO_SET_COOKIE:<br/>            exception_class = UnableToSetCookieException<br/>        elif status in ErrorCode.TIMEOUT:<br/>            exception_class = TimeoutException<br/>        elif status in ErrorCode.SCRIPT_TIMEOUT:<br/>            exception_class = TimeoutException<br/>        elif status in ErrorCode.UNKNOWN_ERROR:<br/>            exception_class = WebDriverException<br/>        elif status in ErrorCode.UNEXPECTED_ALERT_OPEN:<br/>            exception_class = UnexpectedAlertPresentException<br/>        elif status in ErrorCode.NO_ALERT_OPEN:<br/>            exception_class = NoAlertPresentException<br/>        elif status in ErrorCode.IME_NOT_AVAILABLE:<br/>            exception_class = ImeNotAvailableException<br/>        elif status in ErrorCode.IME_ENGINE_ACTIVATION_FAILED:<br/>            exception_class = ImeActivationFailedException<br/>        elif status in ErrorCode.MOVE_TARGET_OUT_OF_BOUNDS:<br/>            exception_class = MoveTargetOutOfBoundsException<br/>        elif status in ErrorCode.JAVASCRIPT_ERROR:<br/>            exception_class = JavascriptException<br/>        elif status in ErrorCode.SESSION_NOT_CREATED:<br/>            exception_class = SessionNotCreatedException<br/>        elif status in ErrorCode.INVALID_ARGUMENT:<br/>            exception_class = InvalidArgumentException<br/>        elif status in ErrorCode.NO_SUCH_COOKIE:<br/>            exception_class = NoSuchCookieException<br/>        elif status in ErrorCode.UNABLE_TO_CAPTURE_SCREEN:<br/>            exception_class = ScreenshotException<br/>        elif status in ErrorCode.ELEMENT_CLICK_INTERCEPTED:<br/>            exception_class = ElementClickInterceptedException<br/>        elif status in ErrorCode.INSECURE_CERTIFICATE:<br/>            exception_class = InsecureCertificateException<br/>        elif status in ErrorCode.INVALID_COORDINATES:<br/>            exception_class = InvalidCoordinatesException<br/>        elif status in ErrorCode.INVALID_SESSION_ID:<br/>            exception_class = InvalidSessionIdException<br/>        elif status in ErrorCode.UNKNOWN_METHOD:<br/>            exception_class = UnknownMethodException<br/>        else:<br/>            exception_class = WebDriverException<br/>        if value == &#x27;&#x27; or value is None:<br/>            value = response[&#x27;value&#x27;]<br/>        if isinstance(value, basestring):<br/>            if exception_class == ErrorInResponseException:<br/>                raise exception_class(response, value)<br/>            raise exception_class(value)<br/>        if message == &quot;&quot; and &#x27;message&#x27; in value:<br/>            message = value[&#x27;message&#x27;]<br/>    <br/>        screen = None<br/>        if &#x27;screen&#x27; in value:<br/>            screen = value[&#x27;screen&#x27;]<br/>    <br/>        stacktrace = None<br/>        if &#x27;stackTrace&#x27; in value and value[&#x27;stackTrace&#x27;]:<br/>            stacktrace = []<br/>            try:<br/>                for frame in value[&#x27;stackTrace&#x27;]:<br/>                    line = self._value_or_default(frame, &#x27;lineNumber&#x27;, &#x27;&#x27;)<br/>                    file = self._value_or_default(frame, &#x27;fileName&#x27;, &#x27;&lt;anonymous&gt;&#x27;)<br/>                    if line:<br/>                        file = &quot;%s:%s&quot; % (file, line)<br/>                    meth = self._value_or_default(frame, &#x27;methodName&#x27;, &#x27;&lt;anonymous&gt;&#x27;)<br/>                    if &#x27;className&#x27; in frame:<br/>                        meth = &quot;%s.%s&quot; % (frame[&#x27;className&#x27;], meth)<br/>                    msg = &quot;    at %s (%s)&quot;<br/>                    msg = msg % (meth, file)<br/>                    stacktrace.append(msg)<br/>            except TypeError:<br/>                pass<br/>        if exception_class == ErrorInResponseException:<br/>            raise exception_class(response, message)<br/>        elif exception_class == UnexpectedAlertPresentException:<br/>            alert_text = None<br/>            if &#x27;data&#x27; in value:<br/>                alert_text = value[&#x27;data&#x27;].get(&#x27;text&#x27;)<br/>            elif &#x27;alert&#x27; in value:<br/>                alert_text = value[&#x27;alert&#x27;].get(&#x27;text&#x27;)<br/>            raise exception_class(message, screen, stacktrace, alert_text)<br/>&gt;       raise exception_class(message, screen, stacktrace)<br/><span class="error">E       selenium.common.exceptions.TimeoutException: Message: timeout</span><br/><span class="error">E         (Session info: chrome=75.0.3770.80)</span><br/><span class="error">E         (Driver info: chromedriver=2.46.628402 (536cd7adbad73a3783fdc2cab92ab2ba7ec361e1),platform=Windows NT 10.0.17134 x86_64)</span><br/><br/>c:\automation_projects\bicl\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: TimeoutException<br/>---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+----------------------------- Captured stdout call -----------------------------<br/>2019-09-01 12:23:19.524581
+Date fell on a Sunday. New Date of 2019-08-30 12:23:19.524581 picked
+Date 2019-08-30 12:23:19.524581 is valid and does not fall on a Holiday, Sunday or Saturday
+No Error
+</div></td></tr></tbody>
+      <tbody class="failed results-table-row">
+        <tr>
+          <td class="col-result">Failed</td>
+          <td class="col-name">tests/test_QTML-T85_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">55.47</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">self = &lt;tests.test_QTML-T85_Chrome.Test_login_Chrome object at 0x00B81210&gt;, browser = &#x27;Chrome&#x27;, env = &#x27;UAT&#x27;<br/><br/>    @pytest.mark.smoke<br/>    <br/>    def test_login_chrome(self, browser, env):<br/>    <br/>        driver = browser<br/>    <br/>        # Create Time Stamp Variable (using Date Time Generator Class in utilities)<br/>        dg = date_time_generator()<br/>        time_stamp = dg.return_time_stamp()<br/>    <br/>        # CSV Reader<br/>        # Read in username, password and env variables<br/>        with open(csv_directory) as f:<br/>            rows = list(csv.reader(f))<br/>            test_case_ID = rows[14][0]<br/>            test_scenario = rows[14][1]<br/>            username = rows[14][2]<br/>            password = rows[14][3]<br/>            browser = rows[14][4]<br/>            account_number = rows[14][5]<br/>            rep_code = rows[14][6]<br/>            test_data1 = rows[14][7]<br/>            test_data2 = rows[14][8]<br/>            control_point_1 = rows[14][9]<br/>            control_point_2 = rows[14][10]<br/>            control_point_3 = rows[14][11]<br/>            control_point_4 = rows[14][12]<br/>    <br/>        # To DEBUG, Uncomment this NEXT line AND Comment lines 13, 15 and 18. Also, SHIFT + TAB lines 17 - 86 (This will remove indents)<br/>        # driver = webdriver.Chrome(str(CONFIG_PATH / &#x27;chromedriver.exe&#x27;))<br/>    <br/>        ## Select Appropriate URL based on the Environment Value (env)<br/>    <br/>        # env = &quot;UAT&quot;<br/>        baseURL = Environments_MYCL.return_environments(env)<br/>        # baseURL = &quot;https://beta.bi.dev.wedbus.com&quot;<br/>    <br/>        driver.get(baseURL)<br/>        driver.maximize_window()<br/>    <br/>        time.sleep(5)<br/>    <br/>        # Login to Site<br/>        lp = LoginPage(driver)<br/>    <br/>        # Verify if page loads (username_field should be clickable), if not, throw exception and take screenshot<br/>        try:<br/>            username_field = lp.Page_Elements().driver.find_element_by_id(&quot;UserName&quot;)<br/>            username_field.click()<br/>        except NoSuchElementException:<br/>            screenshot_name = &quot;FAIL&quot; + &quot;_&quot; + test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>            saved_screenshot_location = str(screenshot_directory / screenshot_name)<br/>            driver.get_screenshot_as_file(saved_screenshot_location)<br/>            raise<br/>    <br/>        lp.login(username, password)<br/>        lp.click_login_button()<br/>    <br/>        time.sleep(10)<br/>    <br/>        # Timeout method for page to load, timeout set to 30 seconds<br/>        try:<br/>            driver.set_page_load_timeout(30)<br/>        except:<br/>            screenshot_name = &quot;FAIL&quot; + &quot;_&quot; + test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>            saved_screenshot_location = str(screenshot_directory / screenshot_name)<br/>            driver.get_screenshot_as_file(saved_screenshot_location)<br/>            raise<br/>    <br/>        # After Login<br/>        # Take screenshot, save to utilities/test_results/screenshots<br/>        screenshot_1 = test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + &quot;screenshot_1&quot; + &quot;_&quot; + control_point_1 + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>        saved_screenshot_location_1 = str(screenshot_directory / screenshot_1)<br/>        driver.get_screenshot_as_file(saved_screenshot_location_1)<br/>    <br/>        # If Error Button displays, mark errorDisplays &quot;TRUE&quot;<br/>        # errorDisplays default is FALSE<br/>        errorDisplays = False<br/>    <br/>        # Check if Error Modal Displays<br/>        if len(driver.find_elements(By.XPATH, &quot;/html/body/div[1]/div/div/div/button&quot;)) &gt; 0:<br/>            errorDisplays = True<br/>        else:<br/>            print(&quot;No Error&quot;)<br/>    <br/>        time.sleep(1)<br/>    <br/>        # Try / Except Block to test if errorDisplays False<br/>        # If True, throw exception, take screenshot and FAIL test<br/>    <br/>        try:<br/>            assert errorDisplays is False<br/>        except AssertionError:<br/>            screenshot_name = &quot;FAIL&quot; + &quot;_&quot; + test_case_ID + &quot;_&quot; + browser + &quot;_&quot; + env + &quot;_&quot; + time_stamp + &quot;.png&quot;<br/>            saved_screenshot_location = str(screenshot_directory / screenshot_name)<br/>            driver.get_screenshot_as_file(saved_screenshot_location)<br/>            raise<br/>    <br/>        time.sleep(1)<br/>    <br/>        # Navigate to Account \ Activity<br/>    <br/>        current_url = driver.current_url<br/>        slashparts = current_url.split(&#x27;/&#x27;)<br/>    <br/>        bbu = build_base_url()<br/>        home_index_string = bbu.return_home_index_string()<br/>        nav_url = &#x27;/&#x27;.join(slashparts[:3]) + &#x27;/&#x27; + home_index_string<br/>    <br/>        screen_to_navigate_to = &quot;account_activity&quot;<br/>        screen = Screens.return_screens(screen_to_navigate_to)<br/>    <br/>&gt;       driver.get(nav_url + screen)<br/><br/>tests\test_QTML-T85_Chrome.py:133: <br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/>c:\automation_projects\bicl\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:333: in get<br/>    self.execute(Command.GET, {&#x27;url&#x27;: url})<br/>c:\automation_projects\bicl\venv\lib\site-packages\selenium\webdriver\remote\webdriver.py:321: in execute<br/>    self.error_handler.check_response(response)<br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/><br/>self = &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x00C4B750&gt;<br/>response = {&#x27;sessionId&#x27;: &#x27;38dfd004486c62d075ded59acac5b730&#x27;, &#x27;status&#x27;: 21, &#x27;value&#x27;: {&#x27;message&#x27;: &#x27;timeout\n  (Session info: chrome...ver info: chromedriver=2.46.628402 (536cd7adbad73a3783fdc2cab92ab2ba7ec361e1),platform=Windows NT 10.0.17134 x86_64)&#x27;}}<br/><br/>    def check_response(self, response):<br/>        &quot;&quot;&quot;<br/>        Checks that a JSON response from the WebDriver does not have an error.<br/>    <br/>        :Args:<br/>         - response - The JSON response from the WebDriver server as a dictionary<br/>           object.<br/>    <br/>        :Raises: If the response contains an error message.<br/>        &quot;&quot;&quot;<br/>        status = response.get(&#x27;status&#x27;, None)<br/>        if status is None or status == ErrorCode.SUCCESS:<br/>            return<br/>        value = None<br/>        message = response.get(&quot;message&quot;, &quot;&quot;)<br/>        screen = response.get(&quot;screen&quot;, &quot;&quot;)<br/>        stacktrace = None<br/>        if isinstance(status, int):<br/>            value_json = response.get(&#x27;value&#x27;, None)<br/>            if value_json and isinstance(value_json, basestring):<br/>                import json<br/>                try:<br/>                    value = json.loads(value_json)<br/>                    if len(value.keys()) == 1:<br/>                        value = value[&#x27;value&#x27;]<br/>                    status = value.get(&#x27;error&#x27;, None)<br/>                    if status is None:<br/>                        status = value[&quot;status&quot;]<br/>                        message = value[&quot;value&quot;]<br/>                        if not isinstance(message, basestring):<br/>                            value = message<br/>                            message = message.get(&#x27;message&#x27;)<br/>                    else:<br/>                        message = value.get(&#x27;message&#x27;, None)<br/>                except ValueError:<br/>                    pass<br/>    <br/>        exception_class = ErrorInResponseException<br/>        if status in ErrorCode.NO_SUCH_ELEMENT:<br/>            exception_class = NoSuchElementException<br/>        elif status in ErrorCode.NO_SUCH_FRAME:<br/>            exception_class = NoSuchFrameException<br/>        elif status in ErrorCode.NO_SUCH_WINDOW:<br/>            exception_class = NoSuchWindowException<br/>        elif status in ErrorCode.STALE_ELEMENT_REFERENCE:<br/>            exception_class = StaleElementReferenceException<br/>        elif status in ErrorCode.ELEMENT_NOT_VISIBLE:<br/>            exception_class = ElementNotVisibleException<br/>        elif status in ErrorCode.INVALID_ELEMENT_STATE:<br/>            exception_class = InvalidElementStateException<br/>        elif status in ErrorCode.INVALID_SELECTOR \<br/>                or status in ErrorCode.INVALID_XPATH_SELECTOR \<br/>                or status in ErrorCode.INVALID_XPATH_SELECTOR_RETURN_TYPER:<br/>            exception_class = InvalidSelectorException<br/>        elif status in ErrorCode.ELEMENT_IS_NOT_SELECTABLE:<br/>            exception_class = ElementNotSelectableException<br/>        elif status in ErrorCode.ELEMENT_NOT_INTERACTABLE:<br/>            exception_class = ElementNotInteractableException<br/>        elif status in ErrorCode.INVALID_COOKIE_DOMAIN:<br/>            exception_class = InvalidCookieDomainException<br/>        elif status in ErrorCode.UNABLE_TO_SET_COOKIE:<br/>            exception_class = UnableToSetCookieException<br/>        elif status in ErrorCode.TIMEOUT:<br/>            exception_class = TimeoutException<br/>        elif status in ErrorCode.SCRIPT_TIMEOUT:<br/>            exception_class = TimeoutException<br/>        elif status in ErrorCode.UNKNOWN_ERROR:<br/>            exception_class = WebDriverException<br/>        elif status in ErrorCode.UNEXPECTED_ALERT_OPEN:<br/>            exception_class = UnexpectedAlertPresentException<br/>        elif status in ErrorCode.NO_ALERT_OPEN:<br/>            exception_class = NoAlertPresentException<br/>        elif status in ErrorCode.IME_NOT_AVAILABLE:<br/>            exception_class = ImeNotAvailableException<br/>        elif status in ErrorCode.IME_ENGINE_ACTIVATION_FAILED:<br/>            exception_class = ImeActivationFailedException<br/>        elif status in ErrorCode.MOVE_TARGET_OUT_OF_BOUNDS:<br/>            exception_class = MoveTargetOutOfBoundsException<br/>        elif status in ErrorCode.JAVASCRIPT_ERROR:<br/>            exception_class = JavascriptException<br/>        elif status in ErrorCode.SESSION_NOT_CREATED:<br/>            exception_class = SessionNotCreatedException<br/>        elif status in ErrorCode.INVALID_ARGUMENT:<br/>            exception_class = InvalidArgumentException<br/>        elif status in ErrorCode.NO_SUCH_COOKIE:<br/>            exception_class = NoSuchCookieException<br/>        elif status in ErrorCode.UNABLE_TO_CAPTURE_SCREEN:<br/>            exception_class = ScreenshotException<br/>        elif status in ErrorCode.ELEMENT_CLICK_INTERCEPTED:<br/>            exception_class = ElementClickInterceptedException<br/>        elif status in ErrorCode.INSECURE_CERTIFICATE:<br/>            exception_class = InsecureCertificateException<br/>        elif status in ErrorCode.INVALID_COORDINATES:<br/>            exception_class = InvalidCoordinatesException<br/>        elif status in ErrorCode.INVALID_SESSION_ID:<br/>            exception_class = InvalidSessionIdException<br/>        elif status in ErrorCode.UNKNOWN_METHOD:<br/>            exception_class = UnknownMethodException<br/>        else:<br/>            exception_class = WebDriverException<br/>        if value == &#x27;&#x27; or value is None:<br/>            value = response[&#x27;value&#x27;]<br/>        if isinstance(value, basestring):<br/>            if exception_class == ErrorInResponseException:<br/>                raise exception_class(response, value)<br/>            raise exception_class(value)<br/>        if message == &quot;&quot; and &#x27;message&#x27; in value:<br/>            message = value[&#x27;message&#x27;]<br/>    <br/>        screen = None<br/>        if &#x27;screen&#x27; in value:<br/>            screen = value[&#x27;screen&#x27;]<br/>    <br/>        stacktrace = None<br/>        if &#x27;stackTrace&#x27; in value and value[&#x27;stackTrace&#x27;]:<br/>            stacktrace = []<br/>            try:<br/>                for frame in value[&#x27;stackTrace&#x27;]:<br/>                    line = self._value_or_default(frame, &#x27;lineNumber&#x27;, &#x27;&#x27;)<br/>                    file = self._value_or_default(frame, &#x27;fileName&#x27;, &#x27;&lt;anonymous&gt;&#x27;)<br/>                    if line:<br/>                        file = &quot;%s:%s&quot; % (file, line)<br/>                    meth = self._value_or_default(frame, &#x27;methodName&#x27;, &#x27;&lt;anonymous&gt;&#x27;)<br/>                    if &#x27;className&#x27; in frame:<br/>                        meth = &quot;%s.%s&quot; % (frame[&#x27;className&#x27;], meth)<br/>                    msg = &quot;    at %s (%s)&quot;<br/>                    msg = msg % (meth, file)<br/>                    stacktrace.append(msg)<br/>            except TypeError:<br/>                pass<br/>        if exception_class == ErrorInResponseException:<br/>            raise exception_class(response, message)<br/>        elif exception_class == UnexpectedAlertPresentException:<br/>            alert_text = None<br/>            if &#x27;data&#x27; in value:<br/>                alert_text = value[&#x27;data&#x27;].get(&#x27;text&#x27;)<br/>            elif &#x27;alert&#x27; in value:<br/>                alert_text = value[&#x27;alert&#x27;].get(&#x27;text&#x27;)<br/>            raise exception_class(message, screen, stacktrace, alert_text)<br/>&gt;       raise exception_class(message, screen, stacktrace)<br/><span class="error">E       selenium.common.exceptions.TimeoutException: Message: timeout</span><br/><span class="error">E         (Session info: chrome=75.0.3770.80)</span><br/><span class="error">E         (Driver info: chromedriver=2.46.628402 (536cd7adbad73a3783fdc2cab92ab2ba7ec361e1),platform=Windows NT 10.0.17134 x86_64)</span><br/><br/>c:\automation_projects\bicl\venv\lib\site-packages\selenium\webdriver\remote\errorhandler.py:242: TimeoutException<br/>---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+----------------------------- Captured stdout call -----------------------------<br/>No Error
+</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_QTML-T43_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">78.49</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+----------------------------- Captured stdout call -----------------------------<br/>No Error
+</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_QTML-T44_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">108.58</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_QTML-T45_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">123.35</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_QTML-T47_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">148.77</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_QTML-T48_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">215.80</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+----------------------------- Captured stdout call -----------------------------<br/>2019-09-01 12:10:54.443150
+Date fell on a Sunday. New Date of 2019-08-30 12:10:54.443150 picked
+Date 2019-08-30 12:10:54.443150 is valid and does not fall on a Holiday, Sunday or Saturday
+No Error
+</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_QTML-T49_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">147.23</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+----------------------------- Captured stdout call -----------------------------<br/>2019-09-01 12:14:36.429808
+Date fell on a Sunday. New Date of 2019-08-30 12:14:36.429808 picked
+Date 2019-08-30 12:14:36.429808 is valid and does not fall on a Holiday, Sunday or Saturday
+No Error
+</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_QTML-T4_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">172.71</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_QTML-T50_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">184.68</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+----------------------------- Captured stdout call -----------------------------<br/>2019-09-01 12:20:08.718332
+Date fell on a Sunday. New Date of 2019-08-30 12:20:08.718332 picked
+Date 2019-08-30 12:20:08.718332 is valid and does not fall on a Holiday, Sunday or Saturday
+No Error
+</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_QTML-T52_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">144.70</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+----------------------------- Captured stdout call -----------------------------<br/>No Error
+</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_QTML-T53_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">241.91</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+----------------------------- Captured stdout call -----------------------------<br/>2019-09-01 12:28:58.644154
+Date fell on a Sunday. New Date of 2019-08-30 12:28:58.644154 picked
+Date 2019-08-30 12:28:58.644154 is valid and does not fall on a Holiday, Sunday or Saturday
+No Error
+</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_QTML-T5_Chrome.py::Test_login_Chrome::test_login_chrome</td>
+          <td class="col-duration">119.27</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">---------------------------- Captured stdout setup -----------------------------<br/>creating a new webdriver
+</div></td></tr></tbody></table></body></html>

@@ -1,0 +1,173 @@
+Test_Case_ID,Test_Type,Test_Scenario,User,Password,Browser,account_number,rep_code,test_data1,test_data_2,control_point_1,control_point_2,control_point_3,control_point_4
+QTML-T4,Smoke,BICL - ACCT TOOLBAR - SUMMARY - HAMBURGER-MENU BUTTON - REPORTS - Confirm Performance Report Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,select_reports,performance_report_screen,before_logout
+QTML-T5,Smoke,BICL - ACCT TOOLBAR - SUMMARY - HAMBURGER-MENU BUTTON - FORMS LIBRARY - Confirm Forms Library Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,select_reports,forms_library_screen,before_logout
+QTML-T43,Smoke,BICL - ACCT - ACCT INFO - DOCUMENTS - OPEN ORDER CONFIRMS - Confirm Open Order Confirms Display,BETA_Test_User,Twinl@kes01,Chrome,12244258,CA,*,*,BICL_Login,select_documents,open_order_confirms_screen,before_logout
+QTML-T44,Smoke,BICL - ACCT - ACCT INFO - DOCUMENTS - TAX STATEMENTS - Confirm Tax Statements Display,BETA_Test_User,Twinl@kes01,Chrome,12244258,CA,*,*,BICL_Login,select_documents,tax_statements_screen,before_logout
+QTML-T45,Smoke,BICL - ACCT - ACCT INFO - DOCUMENTS - MONTHLY STATEMENTS - Confirm Monthly Statements Display,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,select_documents,monthly_statements_screen,before_logout
+QTML-T46,Smoke,BICL - ACCT - ACCT INFO - DOCUMENTS - 401B Letters - Confirm 401B Letters Display,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,select_documents,401B_Letters_screen,before_logout
+QTML-T47,Smoke,BICL - ACCT - ACCT INFO - DOCUMENTS - SCANNED DOCUMENTS - Confirm Scanned Documents Display,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,select_documents,scanned_documents_screen,before_logout
+QTML-T48,Smoke,BICL - HOUSEKEEPING - DOCUMENTS - CONFIRMS - Confirm Confirms Document Display,BETA_Test_User,Twinl@kes01,Chrome,12244258,CA,*,*,BICL_Login,click_search,confirms_screen,before_logout
+QTML-T49,Smoke,BICL - HOUSEKEEPING - DOCUMENTS - OPEN ORDER CONFIRMS - Confirm Open Order Confirms Display,BETA_Test_User,Twinl@kes01,Chrome,12244258,CA,*,*,BICL_Login,click_search,scanned_documents_screen,before_logout
+QTML-T50,Smoke,BICL - HOUSEKEEPING - DOCUMENTS - TAX STATEMENTS - Confirm Tax Statements Display,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,click_search,tax_statements_screen,before_logout
+QTML-T51,Smoke,BICL - HOUSEKEEPING - DOCUMENTS - MONTHLY STATEMENTS - Confirm Monthly Statements Display,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,click_search,monthly_statements_screen,before_logout
+QTML-T52,Smoke,BICL - HOUSEKEEPING - DOCUMENTS - 401B Letters - Confirm 401B Letters Display,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,click_search,401B_Letters_screen,before_logout
+QTML-T53,Smoke,BICL - HOUSEKEEPING - DOCUMENTS - GMAP REPORTS - Confirm GMAP Reports Display,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,click_search,GMAP_screen,before_logout
+QTML-T54,Smoke,BICL - TOOLS - FOLIODX - Validate FOLIODX Displays,VillarrK,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Verify_FOLIODX_Displays,logout,*
+QTML-T55,Smoke,BICL - TOOLS - CALCULATORS - Validate CALCULATORS Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Verify_CALCULATORS_Displays,logout,*
+QTML-T56,Smoke,BICL - TOOLS - RESEARCH - Validate RESEARCH Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Verify_RESEARCH_Displays,logout,*
+QTML-T57,Smoke,BICL - TOOLS - WEDBUSH RESEARCH - Validate WEDBUSH RESEARCH Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,Latest Research,*,BICL_Login,Verify_WEDBUSH_RESEARCH_Displays,logout,*
+QTML-T58,Smoke,BICL - TOOLS - ACATS - Validate ACATS Displays,VillarrK,Twinl@kes01,Chrome,80759293,*,Account,*,BICL_Login,Verify_ACATS_Displays,logout,*
+QTML-T59,Smoke,BICL - ORDER ENTRY - BONDS - Confirm BONDS Displays,VillarrK,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_BONDS_Displays,logout,*
+QTML-T60,Smoke,BICL - ORDER ENTRY - UIT - Confirm UIT Displays,VillarrK,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_UIT_Displays,logout,*
+QTML-T84,Regression,BICL_BI_P3 - ACCT TOOLBAR - SUMMARY - HAMBURGER-MENU BUTTON - CLIENT LINK - Verify the SSO login process for MyCL,P3_Test_User,Twinl@kes01,Chrome,1QX00003,*,*,*,BICL_Login,select_Client_Link,Client_Link_screen,before_logout
+QTML-T85,Regression,MYCL - ACCT - ACTIVITY - TRAILER - Confirm Trailer Column Displays,p3_test_user,Twinl@kes01,Chrome,80759001,CA,*,*,MYCL_Login,Verify Trailer Column,Logout,*
+QTML-T86,Regression,BICL - ACCT TOOLBAR - ACCT - NOTES - Confirm Notes not nested,BETA_Test_User,Twinl@kes01,Chrome,80759001,CA,*,*,BICL_Login_notes_modal_opened,App Rep Notes,Account_Notes,Activity_Notes
+QTML-T87,Regression,BICL - ACCT TOOLBAR - ACCT - NOTES - Confirm Note Fields correct,BETA_Test_User,Twinl@kes01,Chrome,80759001,CA,*,*,BICL_Login_notes_modal_opened,App Rep Notes,Account_Notes,Activity_Notes
+QTML-T88,Regression,BICL - ACCT TOOLBAR - SUMMARY - ACCT SEARCH - Confirm Correct Behavior on Account Search Modal,BETA_Test_User,Twinl@kes01,Chrome,80759001,CA,*,*,BICL_Login,account_search_modal_opened,security_description_tab_clicked,before_logout
+QTML-T93,Regression,MYCL - PROFILE / PREFERENCES - USER PREFERENCES - CHANGE USER NAME - Confirm Fields not Pre-populated after successful page load,p3_test_user,Twinl@kes01,Chrome,*,*,new_user_name,*,MYCL_Login,Navigate_to_User_Preference,Change_User_Name_Confirm_Fields_not_Prepopulated,logout
+QTML-T100,Regression,BICL - ADMIN TOOL - USER ADMIN - Confirm User Account Updated,VillarrK,AdDecimum533,Chrome,80759293,CA,*,*,update_account,BICL Login,GMAP_confirm_update,logout
+QTML-T101,Regression,MYCL - TOOLS - HELP - SERVICE FEES - Confirm Fees Listed for Service Reorganization & CreditPlus,testp3,Summer2019,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS_HELP_confirm_fees_1st_section,confirm_fees_2nd_3rd_section,logout
+QTML-T156_a,Regression,BICL - TOOLS - USER ADMIN - Validate Firelight link displays,Firelight_test_user,Twinl@kes01,Chrome,80759293,KS,*,*,update_account,BICL Login,confirm_firelight_displays,logout
+QTML-T156_b,Regression,BICL - TOOLS - USER ADMIN - Validate Firelight link Not Present,Firelight_test_user,Twinl@kes01,Chrome,80759293,CA,*,*,update_account,BICL Login,confirm_firelight_not_present,logout
+QTML-T159,Regression,MYCL - LOGIN - BROWSER ADDRESS BAR - ADDRESS FIELD - Confirm that site redirects to an HTTPS URL,p3_test_user,Twinl@kes01,Chrome,*,*,https,*,MYCL_Login,Confirm_https_logout,*,*
+QTML-T163,Smoke,MYCL - TOOLS - WEDBUSH RESEARCH - Confirm redirection to site,BETA_Test_User,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS,Navigate_to_WEDBUSH_RESEARCH,logout
+QTML-T164,Smoke,MYCL - TOOLS - CALCULATORS - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,Financial Calculators,*,MYCL_Login,Navigate_to_TOOLS,Navigate_to_CALCULATORS,logout
+QTML-T165,Smoke,MYCL - TOOLS - QUOTES & CHARTS - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS,Navigate_to_QUOTES_CHARTS,logout
+QTML-T166,Smoke,MYCL - DOCUMENTS - MONTHLY STATEMENTS - Confirm Screen Displays Successfully,p3_test_user,Twinl@kes01,Chrome,2FZ99992,CA,*,*,MYCL_Login,MONTHLY_STATEMENTS_screen,Logout,*
+QTML-T167,Smoke,MYCL - DOCUMENTS - CONFIRMS - Confirm Screen Displays Successfully,p3_test_user,Twinl@kes01,Chrome,2FZ99992,CA,*,*,MYCL_Login,CONFIRMS_screen,Logout,*
+QTML-T168,Smoke,MYCL - DOCUMENTS - TAX STATEMENTS - Confirm Screen Displays Successfully,p3_test_user,Twinl@kes01,Chrome,2FZ99992,CA,*,*,MYCL_Login,CONFIRMS_screen,Logout,*
+QTML-T169,Smoke,MYCL - DOCUMENTS - SHAREHOLDER MATERIALS - Confirm Screen Displays Successfully,p3_test_user,Twinl@kes01,Chrome,2FZ99992,CA,*,*,MYCL_Login,CONFIRMS_screen,Logout,*
+QTML-T170,Regression,MYCL - DASHBOARD - ACCOUNT BALANCES - Confirm AS OF Fields filled,p3_test_user,Twinl@kes01,Chrome,80759293,CA,*,*,MYCL_Login,Account_Balances_screen,Logout,*
+QTML-T171,Regression,MYCL - DASHBOARD - ACCOUNT BALANCES - Confirm Spacing & Formatting Correct,p3_test_user,Twinl@kes01,Chrome,80759293,CA,*,*,MYCL_Login,Confirm_Spacing,logout,*
+QTML-T172,Regression,MYCL - PROFILE/PREFERENCES - USER PREFERENCES - SECURITY QUESTIONS - Confirm able to Submit Updates to SECURITY QUESTIONS,p3_test_user2,Twinl@kes01,Chrome,*,CA,wedbush,blah,MYCL_Login,Update_Security_Questions,Confirm_Updates,logout
+QTML-T175,Regression,BICL - ORDER ENTRY - MUTUAL FUNDS - Confirm No Prompt after Order Confirmation,BETA_Test_User,Twinl@kes01,Chrome,80759293,CAIBX,*,*,BICL_Login,Confirm_Total_Value_Financial_Advisor_Fields,logout,*
+QTML-T176,Regression,MYCL - ACCT TOOLBAR - Confirm TOTAL VALUE & ACCOUNT # Display,p3_test_user,Twinl@kes01,Chrome,80759293,CA,*,*,MYCL_Login,Confirm_Total_Value_Financial_Advisor_Fields,logout,*
+QTML-T177,Regression,MYCL - PROFILE/PREFERENCES - USER PREFERENCES - CUSTOMIZE PAGE PREFERENCES - SAVE BUTTON - Confirm able to update Default Landing Page,p3_test_user2,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Update_Page_Preferences,Confirm_Updates,logout
+QTML-T178,Regression,MYCL - ACCT - POSITIONS - Confirm_Values in Account Positions,p3_test_user,Twinl@kes01,Chrome,1RB10083,CA,*,*,MYCL_Login,Confirm_Values_in_Account_Positions,logout,*
+QTML-T180,Regression,BICL - LOGO - Confirm that correct Logo displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,BROKER INSIGHT,*,BICL_Login,Confirm_logo_displays,logout,*
+QTML-T192,Regression,BICL - ACCOUNT TOOLBAR / SUMMARY - HAMBURGER / MENU BUTTON - ACCOUNT - IRA SUMMARY and DISTRIBUTIONS - Verify that tabs / rows display for beneficiaries,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Verify_IRA_Summary_Displays,Verify_Distributions_Displays,logout
+QTML-T193,Regression,BICL - ADMIN TOOL - USER ADMIN - Verify PASSWORD RESET Successful,VillarrK,AdDecimum533,Chrome,*,*,Twinl@kes01,*,BICL_Admin_Login,Password_update,login_BICL,before_logout
+QTML-T194,Regression,MYCL - GAIN & LOSS - Confirm Values in Price Column Display,p3_test_user,Twinl@kes01,Chrome,1LD53933,CA,*,*,MYCL_Login, Redirect to Client Link - Gain & Loss - Unrealized Summary,Gain & Loss - Unrealized Detail,Account - Positions
+QTML-T196,Regression,BICL - ADMIN TOOL - ROLE TEMPLATES - Confirm text does not display,VillarrK,AdDecimum533,Chrome,*,*,Developer,*,Navigate_to_Roles_Templates,Confirm_text_not_on_page,logout,*
+QTML-T197,Regression,BICL - ADMIN TOOL - ROLE TEMPLATES - Confirm setting persists when item checked unchecked,VillarrK,AdDecimum533,Chrome,*,*,*,*,Navigate_to_Roles_Templates,Confirm_checkmark_persists,logout,*
+QTML-T198,Regression,BICL - ACCOUNT TOOLBAR - ALERTS - ALERTS Modal Confirm Scroll bar displays when viewing large # of records,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,Verify_Scroll_Bar_ALERTS,Verify_Scroll_Bar_PORTFOLIO,Verify_Scroll_Bar_RISK,logout
+QTML-T204,Regression,BICL - ACCT TOOLBAR - SUMMARY - ACCT SEARCH - Confirm PREV CLOSE PRICE Displays,BETA_Test_User,Twinl@kes01,Chrome,*,CA,114894RF7,Close Price,BICL_Login,account_search_modal_opened,security_searched_for,before_logout
+QTML-T205,Regression,BICL - ACCT TOOLBAR - SUMMARY - ACCT SEARCH - SECURITY SEARCH - Confirm BOND TYPE Displays,BETA_Test_User,Twinl@kes01,Chrome,*,CA,114894RF7,Bond Type,BICL_Login,account_search_modal_opened,security_searched_for,before_logout
+QTML-T206,Regression,BICL - ACCT TOOLBAR - SUMMARY - ACCT SEARCH - SECURITY SEARCH - Confirm FIRST CALL DATE Displays,BETA_Test_User,Twinl@kes01,Chrome,*,CA,114894RF7,First Call Date,BICL_Login,account_search_modal_opened,security_searched_for,before_logout
+QTML-T207,Regression,BICL - ACCT TOOLBAR - SUMMARY - ACCT SEARCH - SECURITY SEARCH - Confirm FIRST CALL DATE Displays,BETA_Test_User,Twinl@kes01,Chrome,*,CA,114894RF7,First Call Price,BICL_Login,account_search_modal_opened,security_searched_for,before_logout
+QTML-T201,Regression,BICL_BI_P3 - ACCT - ACTIVITY - Confirm SEC NO Column Hidden,P3_Test_User,Twinl@kes01,Chrome,1QX00003,*,*,*,BICL_Login,Confirm_SEC_NO_Column_Displays,logout,*
+QTML-T210,Regression,BICL - ACCT - ACTIVITY - Confirm SEC NO Column Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_SEC_NO_Column_Displays,logout,*
+QTML-T213,Regression,BICL_BI_P3 - ACCT - BALANCES - Validate data populates for MARKET VALUE SUMMARY,P3_Test_User,Twinl@kes01,Chrome,1RR20016,*,*,*,BICL_Login,Confirm_Data_Displays_in_Market_Value_Summary,logout,*
+QTML-T214,Regression,BICL_BI_P3 - ACCT - BALANCES - Validate data populates for CASH FLOW SUMMARY,P3_Test_User,Twinl@kes01,Chrome,1RR20016,*,*,*,BICL_Login,Confirm_Data_Displays_in_CASH_FLOW_Summary,logout,*
+QTML-T215,Regression,BICL_BI_P3 - ACCT - BALANCES - Validate data populates for VALUE EQUITY SUMMARY,P3_Test_User,Twinl@kes01,Chrome,1RR20016,*,*,*,BICL_Login,Confirm_Data_Displays_in_VALUE_EQUITY_Summary,logout,*
+QTML-T216,Regression,BICL - TOOLS - CLIENT SEARCH - TOTAL VALUE PANEL - Validate Total Value Panel,BETA_Test_User,Twinl@kes01,Chrome,80759293,KS,*,*,BICL_Login,input_rep_code,confirm_data_elements,logout
+QTML-T218,Regression,BICL - ACCOUNT - OVERVIEW - SUMMARY OF ACCOUNTS - MARGIN BALANCE TOTAL - Validate Correct Decimal places,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,confirm_decimal_places,logout,*
+QTML-T219,Regression,BICL - ACCOUNT - OVERVIEW - SUMMARY OF ACCOUNTS - NET MARKET VALUE TOTAL - Validate Correct Decimal places,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,confirm_decimal_places,logout,*
+QTML-T220,Regression,BICL - ACCOUNT - OVERVIEW - SUMMARY OF ACCOUNTS - FUNDS AVAILABLE TOTAL - Validate Correct Decimal places,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,confirm_decimal_places,logout,*
+QTML-T223,Regression,BICL_BI_P3 - ACCT - BALANCES - Validate that PDF EXPORT BUTTON Displays,P3_Test_User,Twinl@kes01,Chrome,1QX00003,*,*,*,BICL_Login,Confirm_PDF_Button_Displays,logout,*
+QTML-T237,Regression,BICL - CERTIFICATE - Verify No Certificate Errors display,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,validate_no_certificate_errors,logout,*
+QTML-T238,Regression,MYCL - CERTIFICATE - Verify No Certificate Errors display,p3_test_user,Twinl@kes01,Chrome,*,*,https,*,MYCL_Login,Confirm_no_certificate_errors,logout,*
+QTML-T242,Regression,BICL_BI_P3 - ACCOUNT - POSITIONS - Verify Close Price Displays instead of Current Price,P3_Test_User,Twinl@kes01,Chrome,1RR20016,*,*,*,BICL_Login,Confirm_Close_Price_Displays,logout,*
+QTML-T243,Regression,BICL - ACCT - ACTIVITY - Confirm Data Formatting Issues fixed,BETA_Test_User,Twinl@kes01,Chrome,83566500,*,*,*,BICL_Login,Confirm_SEC_NO_Column_Displays,logout,*
+QTML-T244,Regression,BICL - ACCT - ORDER INQUIRY - Confirm correct formatting for LEAVES T and QUANTITY Columns,BETA_Test_User,Twinl@kes01,Chrome,85441620,*,*,*,BICL_Login,Verify_Correct_Output_Displays,logout,*
+QTML-T249,Regression,BICL_BI_P3 - GAIN & LOSS - UNREALIZED SUMMARY - Validate that PDF Export is correct,P3_Test_User,Twinl@kes01,Chrome,1RR20016,*,*,*,BICL_Login,Gain_Loss_Holdings_UNREALIZED_SUMMARY_Screen,Confirm_PDF_Output_Screen,logout
+QTML-T250,Regression,BICL_BI_P3 - GAIN & LOSS - UNREALIZED DETAIL - Validate that PDF Export is correct,P3_Test_User,Twinl@kes01,Chrome,1RR20016,*,*,*,BICL_Login,Gain_Loss_Holdings_UNREALIZED_DETAIL_Screen,Confirm_PDF_Output_Screen,logout
+QTML-T251,Regression,BICL_BI_P3 - GAIN & LOSS - REALIZED - Validate that PDF Export is correct,P3_Test_User,Twinl@kes01,Chrome,1RR20016,*,*,*,BICL_Login,Gain_Loss_Holdings_REALIZED_Screen,Confirm_PDF_Output_Screen,logout
+QTML-T253,Regression,BICL_BI_P3 - GAIN & LOSS - REALIZED - Validate that 'TOTAL' Trailer Record includes the world 'TOTAL' on the TOTAL LINE,P3_Test_User,Twinl@kes01,Chrome,1RR20016,*,*,*,BICL_Login,Confirm_Close_Price_Displays,logout,*
+QTML-T267_a,Regression,BICL - ACCT TOOLBAR - ACCT - NOTES - Validate PDF Export,BETA_Test_User,Twinl@kes01,Chrome,80759001,CA,*,*,Login,ALL_REP_NOTES_PDF,Logout,*
+QTML-T267_b,Regression,BICL - ACCT TOOLBAR - ACCT - NOTES - Validate PDF Export,BETA_Test_User,Twinl@kes01,Chrome,80759001,CA,*,*,Login,ACCOUNT_NOTES_PDF,Logout,*
+QTML-T267_c,Regression,BICL - ACCT TOOLBAR - ACCT - NOTES - Validate PDF Export,BETA_Test_User,Twinl@kes01,Chrome,80759001,CA,*,*,Login,ACTIVITY_NOTES_PDF,Logout,*
+QTML-T287,Regression,BICL_BI_P3 - ACCT TOOLBAR - SUMMARY - HAMBURGER-MENU BUTTON - CLIENT LINK - Verify the SSO login process for MyCL,P3_Test_User,Twinl@kes01,Chrome,1QX00003,*,*,*,BICL_Login,select_Client_Link,Client_Link_screen,before_logout
+QTML-T323,Regression,BICL - ACCT TOOLBAR - SUMMARY - ACCT SEARCH - SECURITY SEARCH - Validate that SEARCH window is cleared after Close,BETA_Test_User,Twinl@kes01,Chrome,*,CA,THE,TEST,BICL_Login,account_search_modal_opened,perform_search,before_logout
+QTML-T328,Regression,BICL - ACCOUNT TOOLBAR / SUMMARY - HAMBURGER / MENU BUTTON - ACCOUNT - Violations - Verify that Violations Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Verify_Violations_Displays,logout,*
+QTML-T329,Regression,BICL - ADMIN TOOL - USER ADMIN - Validate that Menu Items display if proper permissions are granted,VillarrK,AdDecimum533,Chrome,*,*,VillarrK,*,Locate_Update_User_Profile,Navigate_away_Locate_User_Profile_Click_Replay_Feature,Reset_User_Profile,*
+QTML-T342,Smoke,BICL - ACCT - ACCT INFO - DOCUMENTS - CONFIRMS - Confirm Confirms Display,BETA_Test_User,Twinl@kes01,Chrome,12244258,*,*,*,BICL_Login,select_documents,open_confirms_screen,before_logout
+QTML-T346,Smoke,BICL - USER DROP DOWN - LOGOUT - Confirm Logout,BETA_Test_User,Twinl@kes01,Chrome,12244258,*,*,*,BICL_Login,Lookup_Account,logout,*
+QTML-T347,Smoke,BICL - USER DROP DOWN - CHANGE PASSWORD - Confirm CHANGE PASSWORD Displays,BETA_Test_User,Twinl@kes01,Chrome,12244258,*,*,*,BICL_Login,Change_password_modal,logout,*
+QTML-T348,Smoke,BICL - USER DROP DOWN - ANNOUNCEMENTS - Confirm ANNOUNCEMENTS Displays,BETA_Test_User,Twinl@kes01,Chrome,12244258,*,*,*,BICL_Login,Announcements_modal,logout,*
+QTML-T349,Smoke,BICL - USER DROP DOWN - HELP - Confirm HELP Displays,BETA_Test_User,Twinl@kes01,Chrome,12244258,*,*,*,BICL_Login,Help_modal,logout,*
+QTML-T350,Smoke,BICL - TOOLS - CLIENT SEARCH - Validate Client Search Displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,Client Search,*,BICL_Login,Verify_Client_Search_Displays,logout,*
+QTML-T351,Smoke,BICL - TOOLS - STOCK RECORD - Validate Stock Record Displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,Stock Record,*,BICL_Login,Verify_Stock_Record_Displays,logout,*
+QTML-T352,Smoke,BICL - TOOLS - BOND RATING - Validate Bond Rating Displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,*,*,BICL_Login,Verify_Bond_Rating_Displays,logout,*
+QTML-T353,Smoke,BICL - TOOLS - FIRELIGHT - Validate Firelight displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,*,*,BICL_Login,Verify_Firelight_Displays,logout,*
+QTML-T354,Smoke,BICL - PERFORMANCE - COMMISSIONS - Validate Commissions displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,*,*,BICL_Login,Verify_Commissions_Displays,logout,*
+QTML-T355,Smoke,BICL - PERFORMANCE - ANALYSIS DETAIL - Validate Analysis Detail displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,*,*,BICL_Login,Verify_Analysis_Detail_Displays,logout,*
+QTML-T356,Smoke,BICL - PERFORMANCE - BRANCH - Validate Branch displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,*,*,BICL_Login,Verify_Branch_Displays,logout,*
+QTML-T357,Smoke,BICL - HOUSEKEEPING - DOCUMENTS - Validate Documents displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,Documents,*,BICL_Login,Verify_Documents_Displays,logout,*
+QTML-T358,Smoke,BICL - HOUSEKEEPING - SHAREHOLDER MATERIALS - Validate Shareholder Materials DOES NOT display,VillarrK,Twinl@kes01,Chrome,*,*,Shareholder Materials,*,BICL_Login,Verify_Shareholder_Materials_Does_Not_Display,logout,*
+QTML-T359,Smoke,BICL - HOUSEKEEPING - ACTIVITY - Validate Activity displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,Activity,*,BICL_Login,Verify_Activity_Displays,logout,*
+QTML-T360,Smoke,BICL - HOUSEKEEPING - ACTION ITEMS - Validate Action Items displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,Action Items,*,BICL_Login,Verify_Action_Items_Displays,logout,*
+QTML-T361,Smoke,BICL - HOUSEKEEPING - OPEN ORDERS - Validate Open Orders displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,Open Orders,*,BICL_Login,Verify_Open_Orders_Displays,logout,*
+QTML-T362,Smoke,BICL - HOUSEKEEPING - ACAT STATUS - Validate ACAT Status displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,ACAT Status,*,BICL_Login,Verify_ACAT_Status_Displays,logout,*
+QTML-T363,Smoke,BICL - HOUSEKEEPING - REORG TRACKING - Validate Reorg Tracking displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,Reorg Tracking,*,BICL_Login,Verify_Reorg_Tracking_Displays,logout,*
+QTML-T364,Smoke,BICL - HOUSEKEEPING - MATURITY SCHEDULE - Validate Maturity Schedule displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,Maturity Schedule,*,BICL_Login,Verify_Maturity_Schedule_Displays,logout,*
+QTML-T365,Smoke,BICL - HOUSEKEEPING - NEW ACCOUNT - Validate New Account displays,VillarrK,Twinl@kes01,Chrome,*,*,New Account,*,BICL_Login,Verify_New_Account_Displays,logout,*
+QTML-T366,Smoke,BICL - HOUSEKEEPING - ACCOUNT TRANSFER - Validate Account Transfer DOES NOT display,VillarrK,Twinl@kes01,Chrome,*,*,Account Transfer,*,BICL_Login,Verify_Account_Transfer_Does_Not_Display,logout,*
+QTML-T367,Smoke,BICL - HOUSEKEEPING - UPDATE ACCOUNT - Validate Update Account displays,VillarrK,Twinl@kes01,Chrome,*,*,Update Account,*,BICL_Login,Verify_Update_Account_Displays,logout,*
+QTML-T368,Smoke,BICL - HOUSEKEEPING - MF QUESTIONNAIRE - Validate MF Questionnaire displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,MF Questionnaire,*,BICL_Login,Verify_MF_Questionnaire_Displays,logout,*
+QTML-T369,Smoke,BICL - HOUSEKEEPING - MF QUESTIONNAIRE MGR - Validate MF Questionnaire Mgr displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,MF Questionnaire Manager,*,BICL_Login,Verify_MF_Questionnaire_Mgr_Displays,logout,*
+QTML-T370,Smoke,BICL - ACCT TOOLBAR - SUMMARY - ACCT SEARCH - Account Search Modal - Validate Account Search Modal Displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,*,*,BICL_Login,account_search_modal_opened,before_logout,*
+QTML-T371,Smoke,BICL - ACCT TOOLBAR - SUMMARY - ACCT SEARCH - SECURITY SEARCH / SECURITY DESCRIPTION - Confirm ACCOUNT SEARCH Tab Displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,*,*,BICL_Login,account_search_modal_opened,before_logout,*
+QTML-T372,Smoke,BICL - ACCT TOOLBAR - SUMMARY - ACCT SEARCH - SECURITY SEARCH / SECURITY DESCRIPTION - Validate that Panel Displays,BETA_Test_User,Twinl@kes01,Chrome,*,CA,114894RF7,*,BICL_Login,account_search_modal_opened,security_searched_for,before_logout
+QTML-T373,Smoke,BICL - ACCOUNT TOOLBAR / SUMMARY - ACCOUNT DETAIL PANEL - Validate Hide / Display Account Detail Panel,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Hide_Account_Detail_Panel,UnHide_Account_Detail_Panel_logout,*
+QTML-T374,Smoke,BICL - ACCOUNT TOOLBAR - ALERTS - ALERTS Tab - Validate that Panel Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,Login, Verify_ALERTS_Panel,logout,*
+QTML-T375,Smoke,BICL - ACCOUNT TOOLBAR - ALERTS - PORTFOLIO Tab - Validate that Panel Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,Login, Verify_PORTFOLIO_Panel,logout,*
+QTML-T376,Smoke,BICL - ACCOUNT TOOLBAR - ALERTS - RISKS Tab - Validate that Panel Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,Login, Verify_RISKS_Panel,logout,*
+QTML-T377,Smoke,BICL - ACCT TOOLBAR - ACCT - NOTES - Validate Add Note Tab Displays,BETA_Test_User,Twinl@kes01,Chrome,80759001,CA,*,*,Login,Add_Note_Tab,Logout,*
+QTML-T378,Smoke,BICL - ACCT TOOLBAR - ACCT - NOTES - Validate ACCOUNT NOTES Tab Displays,BETA_Test_User,Twinl@kes01,Chrome,80759001,CA,*,*,Login,ACCOUNT_NOTES_Tab,Logout,*
+QTML-T379,Smoke,BICL - ACCT TOOLBAR - ACCT - NOTES - Validate ALL REP NOTES Tab Displays,BETA_Test_User,Twinl@kes01,Chrome,80759001,CA,*,*,Login,ALL_REP_NOTES_Tab,Logout,*
+QTML-T380,Smoke,BICL - ACCT TOOLBAR - ACCT - NOTES - Validate ACTIVITY NOTES Tab Displays,BETA_Test_User,Twinl@kes01,Chrome,80759001,CA,*,*,Login,ACTIVITY_NOTES_Tab,Logout,*
+QTML-T381,Smoke,BICL - ACCT TOOLBAR - SUMMARY - HAMBURGER-MENU BUTTON - CLIENT LINK - Validate CLIENT LINK Redirection,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,select_Client_Link,Client_Link_screen,before_logout
+QTML-T382,Smoke,BICL - ACCT TOOLBAR - SUMMARY - HAMBURGER-MENU BUTTON - DOCUMENTS - Validate DOCUMENTS Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,select_Documents_Link,Client_Link_screen_before_logout,*
+QTML-T383,Smoke,BICL - ACCOUNT TOOLBAR / SUMMARY - HAMBURGER / MENU BUTTON - ACCOUNT - ACCOUNT INFO - Verify ACCOUNT INFO Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Verify_ACCOUNT_INFO_Displays,logout,*
+QTML-T384,Smoke,BICL - ACCOUNT TOOLBAR / SUMMARY - HAMBURGER / MENU BUTTON - ACCOUNT - ACCOUNT CHANGES - Verify ACCOUNT CHANGES Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Verify_ACCOUNT_CHANGES_Displays,logout,*
+QTML-T385,Smoke,BICL - ACCOUNT TOOLBAR / SUMMARY - HAMBURGER / MENU BUTTON - ACCOUNT - ALTERNATE ADDRESS - Verify ALTERNATE ADDRESS Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Verify_ALTERNATE_ADDRESS_Displays,logout,*
+QTML-T386,Smoke,BICL - ACCOUNT TOOLBAR / SUMMARY - HAMBURGER / MENU BUTTON - ACCOUNT - DISTRIBUTIONS - Verify DISTRIBUTIONS Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Verify_DISTRIBUTIONS_Displays,logout,*
+QTML-T387,Smoke,BICL - ACCOUNT TOOLBAR / SUMMARY - HAMBURGER / MENU BUTTON - ACCOUNT - INTERESTED PARTY - Verify INTERESTED PARTY Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Verify_INTERESTED_PARTY_Displays,logout,*
+QTML-T388,Smoke,BICL - ACCOUNT TOOLBAR / SUMMARY - HAMBURGER / MENU BUTTON - ACCOUNT - IRA SUMMARY - Verify IRA SUMMARY Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Verify_IRA_SUMMARY_Displays,logout,*
+QTML-T389,Smoke,BICL - ACCOUNT TOOLBAR / SUMMARY - HAMBURGER / MENU BUTTON - ACCOUNT - VIOLATIONS - Verify VIOLATIONS Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Verify_VIOLATIONS_Displays,logout,*
+QTML-T390,Smoke,BICL - ACCOUNT TOOLBAR / SUMMARY - HAMBURGER / MENU BUTTON - ACCOUNT - IRA BENEFICIARY - Verify IRA BENEFICIARY Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Verify_IRA_BENEFICIARY_Displays,logout,*
+QTML-T391,Smoke,BICL - ACCT - POSITIONS - Confirm Positions Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Positions_Displays,logout,*
+QTML-T392,Smoke,BICL - ACCT - OVERVIEW - Confirm Overview Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Overview_Displays,logout,*
+QTML-T393,Smoke,BICL - ACCT - BALANCES - Confirm Balances Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Balances_Displays,logout,*
+QTML-T394,Smoke,BICL - ACCT - ACTIVITY - Confirm Activity Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Activity_Displays,logout,*
+QTML-T395,Smoke,BICL - ACCT - CASH FLOW - Confirm Cash Flow Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Cash_Flow_Displays,logout,*
+QTML-T396,Smoke,BICL - ACCT - IRA - Confirm IRA Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_IRA_Displays,logout,*
+QTML-T397,Smoke,BICL - ACCT - COMMISSIONS - Confirm Commissions Displays,VillarrK,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Commissions_Displays,logout,*
+QTML-T398,Smoke,BICL - ACCT - ACCOUNT INFO - Confirm Account Info Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Account_Info_Displays,logout,*
+QTML-T399,Smoke,BICL - ACCT - ORDER INQUIRY - Confirm Order Inquiry Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Order_Inquiry_Displays,logout,*
+QTML-T400,Smoke,BICL - ACCT - MATURING SECURITIES - Confirm Maturing Securities Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Maturing_Securities_Displays,logout,*
+QTML-T401,Smoke,BICL - ACCT - FUNDS DISTRIBUTION - Confirm Funds Distribution Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Funds_Distribution_Displays,logout,*
+QTML-T402,Smoke,BICL - GAIN & LOSS - HOLDINGS - Confirm HOLDINGS Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Holdings_Displays,logout,*
+QTML-T403,Smoke,BICL - GAIN & LOSS - TAX INFO - Confirm TAX INFO Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Tax_Info_Displays,logout,*
+QTML-T404,Smoke,BICL - GAIN & LOSS - PROJECTED INCOME - Confirm PROJECTED INCOME Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Projected_Income_Displays,logout,*
+QTML-T405,Smoke,BICL - GAIN & LOSS - PENDING INCOME - Confirm PENDING INCOME Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Pending_Income_Displays,logout,*
+QTML-T406,Smoke,BICL - GAIN & LOSS - REINVESTED DIV - Confirm REINVESTED DIV Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_Reinvested_Div_Displays,logout,*
+QTML-T407,Smoke,BICL - ORDER ENTRY - EQUITIES OPTIONS - Confirm EQUITIES OPTIONS Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_EQUITIES_OPTIONS_Displays,logout,*
+QTML-T408,Smoke,BICL - ORDER ENTRY - MUTUAL FUNDS - Confirm MUTUAL FUNDS Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_MUTUAL_FUNDS_Displays,logout,*
+QTML-T409,Smoke,BICL - ORDER ENTRY - ORDER BILLING - Confirm ORDER BILLING Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_ORDER_BILLING_Displays,logout,*
+QTML-T410,Smoke,BICL - ORDER ENTRY - PIPS - Confirm PIPS Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,Confirm_PIPS_Displays,logout,*
+QTML-T411,Smoke,MYCL - USER DROP DOWN - LOGOUT - Confirm Logout,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_Logout,logout,*
+QTML-T412,Smoke,MYCL - USER DROP DOWN - CONTACT US - Confirm Contact Us,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_Contact_Us,logout,*
+QTML-T413,Smoke,MYCL - USER DROP DOWN - USER PREFERENCE - Confirm User Preference,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_User_Preference,logout,*
+QTML-T414,Smoke,MYCL - USER DROP DOWN - ACCOUNT PREFERENCE - Confirm Account Preference,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_Account_Preference,logout,*
+QTML-T415,Smoke,MYCL - USER DROP DOWN - HELP - Confirm Help,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_Help,logout,*
+QTML-T416,Smoke,MYCL - TOOLS - HELP - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS,Navigate_to_HELP,logout
+QTML-T417,Smoke,MYCL - TOOLS - QUOTES & CHARTS - OPTIONS LOOKUP - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS,Navigate_to_OPTIONS_LOOKUP,logout
+QTML-T419,Smoke,MYCL - TOOLS - QUOTES & CHARTS - MY PORTFOLIO - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS,Navigate_to_MY_PORTFOLIO,logout
+QTML-T420,Smoke,MYCL - TOOLS - QUOTES & CHARTS - MY WATCHLIST - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS,Navigate_to_MY_WATCHLIST,logout
+QTML-T421,Smoke,MYCL - PROFILE/PREFERENCES - USER PREFERENCES - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_User_Preferences,logout,*
+QTML-T422,Smoke,MYCL - PROFILE/PREFERENCES - ACCOUNT PREFERENCES - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_Account_Preferences,logout,*
+QTML-T423,Smoke,MYCL - GAIN & LOSS - UNREALIZED SUMMARY - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_GAIN_LOSS_UNREALIZED_SUMMARY,logout,*
+QTML-T424,Smoke,MYCL - GAIN & LOSS - UNREALIZED DETAIL - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_GAIN_LOSS_UNREALIZED_DETAIL,logout,*
+QTML-T425,Smoke,MYCL - GAIN & LOSS - REALIZED - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_GAIN_LOSS_REALIZED,logout,*
+QTML-T426,Smoke,MYCL - GAIN & LOSS - PROJECTED INCOME - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_GAIN_LOSS_PROJECTED_INCOME,logout,*
+QTML-T427,Smoke,MYCL - GAIN & LOSS - PENDING INCOME - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_GAIN_LOSS_PENDING_INCOME,logout,*
+QTML-T428,Smoke,MYCL - ACCOUNT - POSITIONS - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_ACCOUNT_POSITIONS,logout,*
+QTML-T429,Smoke,MYCL - ACCOUNT - ACTIVITY - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_ACCOUNT_ACTIVITY,logout,*
+QTML-T430,Smoke,MYCL - ACCOUNT - CASH FLOW - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_ACCOUNT_CASH_FLOW,logout,*
+QTML-T431,Smoke,MYCL - DASHBOARD - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_DASHBOARD,logout,*
+QTML-T440,Regression,BICL - ACCT TOOLBAR - SUMMARY - ACCT SEARCH - Validate that search results are returned for 2nd field values from NAME Column,p3_test_user2,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Update_Page_Preferences,Confirm_Updates,logout
+QTML-T626_a,Regression,BICL_BI_P3 - ACCT TOOLBAR - SUMMARY - HAMBURGER-MENU BUTTON - CLIENT LINK - Validate that MYCL SSO Branding Displays Correctly,P3_Test_User,Twinl@kes01,Chrome,1RB10073​,*,*,*,BICL_Login,select_Client_Link,Validate_MYCL_SSO_Branding,before_logout
+QTML-T626_b,Regression,BICL_BI_P3 - ACCT TOOLBAR - SUMMARY - HAMBURGER-MENU BUTTON - CLIENT LINK - Validate that MYCL SSO Branding Displays Correctly,P3_Test_User,Twinl@kes01,Chrome,1LZ80007,*,*,*,BICL_Login,select_Client_Link,Validate_MYCL_SSO_Branding,before_logout
+QTML-T626_c,Regression,BICL_BI_P3 - ACCT TOOLBAR - SUMMARY - HAMBURGER-MENU BUTTON - CLIENT LINK - Validate that MYCL SSO Branding Displays Correctly,P3_Test_User,Twinl@kes01,Chrome,1QX00003,*,*,*,BICL_Login,select_Client_Link,Validate_MYCL_SSO_Branding,before_logout
