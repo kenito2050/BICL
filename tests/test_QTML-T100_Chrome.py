@@ -77,7 +77,7 @@ class Test_login_Chrome:
 
         # Assemble Admin URL String with User Creds
         parse_object = urlparse(baseURL_Admin)
-        ffqdn = parse_object.netloc
+        fqdn = parse_object.netloc
         base_url = "https://" + username + ":" + password + "@" + fqdn
 
         # Navigate to Admin Page using Admin URL String
