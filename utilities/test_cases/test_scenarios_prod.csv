@@ -1,41 +1,41 @@
 Test_Case_ID,Test_Scenario,User,Password,Browser,account_number,rep_code,test_data1,test_data_2,control_point_1,control_point_2,control_point_3,control_point_4
-QTML-T4,BICL - ACCT TOOLBAR - SUMMARY - HAMBURGER-MENU BUTTON - REPORTS - Confirm Performance Report Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,select_reports,performance_report_screen,before_logout
-QTML-T5,BICL - ACCT TOOLBAR - SUMMARY - HAMBURGER-MENU BUTTON - FORMS LIBRARY - Confirm Forms Library Displays,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,select_reports,forms_library_screen,before_logout
-QTML-T43,BICL - ACCT - ACCT INFO - DOCUMENTS - OPEN ORDER CONFIRMS - Confirm Open Order Confirms Display,BETA_Test_User,Twinl@kes01,Chrome,12244258,CA,*,*,BICL_Login,select_documents,open_order_confirms_screen,before_logout
-QTML-T44,BICL - ACCT - ACCT INFO - DOCUMENTS - TAX STATEMENTS - Confirm Tax Statements Display,BETA_Test_User,Twinl@kes01,Chrome,12244258,CA,*,*,BICL_Login,select_documents,tax_statements_screen,before_logout
-QTML-T45,BICL - ACCT - ACCT INFO - DOCUMENTS - MONTHLY STATEMENTS - Confirm Monthly Statements Display,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,select_documents,monthly_statements_screen,before_logout
-QTML-T46,BICL - ACCT - ACCT INFO - DOCUMENTS - 401B Letters - Confirm 401B Letters Display,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,select_documents,401B_Letters_screen,before_logout
-QTML-T47,BICL - ACCT - ACCT INFO - DOCUMENTS - SCANNED DOCUMENTS - Confirm Scanned Documents Display,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,select_documents,scanned_documents_screen,before_logout
-QTML-T48,BICL - HOUSEKEEPING - DOCUMENTS - CONFIRMS - Confirm Confirms Document Display,BETA_Test_User,Twinl@kes01,Chrome,12244258,CA,*,*,BICL_Login,click_search,confirms_screen,before_logout
-QTML-T49,BICL - HOUSEKEEPING - DOCUMENTS - OPEN ORDER CONFIRMS - Confirm Open Order Confirms Display,BETA_Test_User,Twinl@kes01,Chrome,12244258,CA,*,*,BICL_Login,click_search,scanned_documents_screen,before_logout
-QTML-T50,BICL - HOUSEKEEPING - DOCUMENTS - TAX STATEMENTS - Confirm Tax Statements Display,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,click_search,tax_statements_screen,before_logout
-QTML-T51,BICL - HOUSEKEEPING - DOCUMENTS - MONTHLY STATEMENTS - Confirm Monthly Statements Display,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,click_search,monthly_statements_screen,before_logout
-QTML-T52,BICL - HOUSEKEEPING - DOCUMENTS - 401B Letters - Confirm 401B Letters Display,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,click_search,401B_Letters_screen,before_logout
-QTML-T53,BICL - HOUSEKEEPING - DOCUMENTS - GMAP REPORTS - Confirm GMAP Reports Display,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,BICL_Login,click_search,GMAP_screen,before_logout
-QTML-T85,MYCL - ACCT - ACTIVITY - TRAILER - Confirm Trailer Column Displays,p3_test_user,Twinl@kes01,Chrome,80759001,CA,*,*,MYCL_Login,Verify Trailer Column,Logout,*
-QTML-T86,BICL - ACCT TOOLBAR - ACCT - NOTES - Confirm Notes not nested,BETA_Test_User,Twinl@kes01,Chrome,80759001,CA,*,*,BICL_Login_notes_modal_opened,App Rep Notes,Account_Notes,Activity_Notes
-QTML-T87,BICL - ACCT TOOLBAR - ACCT - NOTES - Confirm Note Fields correct,BETA_Test_User,Twinl@kes01,Chrome,80759001,CA,*,*,BICL_Login_notes_modal_opened,App Rep Notes,Account_Notes,Activity_Notes
-QTML-T88,BICL - ACCT TOOLBAR - SUMMARY - ACCT SEARCH - Confirm Correct Behavior on Account Search Modal,BETA_Test_User,Twinl@kes01,Chrome,80759001,CA,*,*,BICL_Login,account_search_modal_opened,security_description_tab_clicked,before_logout
-QTML-T100,BICL - ADMIN TOOL - USER ADMIN - Confirm User Account Updated,BETA_Test_User,Twinl@kes01,Chrome,80759293,CA,*,*,update_account,BICL Login,GMAP_confirm_update,logout
-QTML-T101,MYCL - TOOLS - HELP - SERVICE FEES - Confirm Fees Listed for Service Reorganization & CreditPlus,testp3,Summer2019,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS_HELP_confirm_fees_1st_section,confirm_fees_2nd_3rd_section,logout
-QTML-T156_a,BICL - TOOLS - USER ADMIN - Validate Firelight link displays,Firelight_test_user,Twinl@kes01,Chrome,80759293,KS,*,*,update_account,BICL Login,confirm_firelight_displays,logout
-QTML-T156_b,BICL - TOOLS - USER ADMIN - Validate Firelight link Not Present,Firelight_test_user,Twinl@kes01,Chrome,80759293,CA,*,*,update_account,BICL Login,confirm_firelight_not_present,logout
-QTML-T163,MYCL - TOOLS - WEDBUSH RESEARCH - Confirm redirection to site,BETA_Test_User,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS,Navigate_to_WEDBUSH_RESEARCH,logout
-QTML-T164,MYCL - TOOLS - CALCULATORS - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS,Navigate_to_CALCULATORS,logout
-QTML-T165,MYCL - TOOLS - QUOTES & CHARTS - Confirm Screen Displays,p3_test_user,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS,Navigate_to_QUOTES_CHARTS,logout
-QTML-T166,MYCL - DOCUMENTS - MONTHLY STATEMENTS - Confirm Screen Displays Successfully,p3_test_user,Twinl@kes01,Chrome,2FZ99992,CA,*,*,MYCL_Login,MONTHLY_STATEMENTS_screen,Logout,*
-QTML-T167,MYCL - DOCUMENTS - CONFIRMS - Confirm Screen Displays Successfully,p3_test_user,Twinl@kes01,Chrome,2FZ99992,CA,*,*,MYCL_Login,CONFIRMS_screen,Logout,*
-QTML-T168,MYCL - DOCUMENTS - TAX STATEMENTS - Confirm Screen Displays Successfully,p3_test_user,Twinl@kes01,Chrome,2FZ99992,CA,*,*,MYCL_Login,CONFIRMS_screen,Logout,*
-QTML-T169,MYCL - DOCUMENTS - SHAREHOLDER MATERIALS - Confirm Screen Displays Successfully,p3_test_user,Twinl@kes01,Chrome,2FZ99992,CA,*,*,MYCL_Login,CONFIRMS_screen,Logout,*
-QTML-T170,MYCL - DASHBOARD - ACCOUNT BALANCES - Confirm AS OF Fields filled,p3_test_user,Twinl@kes01,Chrome,80759293,CA,*,*,MYCL_Login,Account_Balances_screen,Logout,*
-QTML-T171,MYCL - DASHBOARD - ACCOUNT BALANCES - Confirm Spacing & Formatting Correct,p3_test_user,Twinl@kes01,Chrome,80759293,CA,*,*,MYCL_Login,Confirm_Spacing,logout,*
-QTML-T172,MYCL - PROFILE/PREFERENCES - USER PREFERENCES - SECURITY QUESTIONS - Confirm able to Submit Updates to SECURITY QUESTIONS,p3_test_user2,Twinl@kes01,Chrome,*,CA,wedbush,blah,MYCL_Login,Update_Security_Questions,Confirm_Updates,logout
-QTML-T175,BICL - ORDER ENTRY - MUTUAL FUNDS - Confirm No Prompt after Order Confirmation,BETA_Test_User,Twinl@kes01,Chrome,80759293,CAIBX,*,*,BICL_Login,Confirm_Total_Value_Financial_Advisor_Fields,logout,*
-QTML-T176,MYCL - ACCT TOOLBAR - Confirm TOTAL VALUE & ACCOUNT # Display,p3_test_user,Twinl@kes01,Chrome,80759293,CA,*,*,MYCL_Login,Confirm_Total_Value_Financial_Advisor_Fields,logout,*
-QTML-T177,MYCL - PROFILE/PREFERENCES - USER PREFERENCES - CUSTOMIZE PAGE PREFERENCES - SAVE BUTTON - Confirm able to update Default Landing Page,p3_test_user2,Twinl@kes01,Chrome,*,*,*,*,MYCL_Login,Update_Page_Preferences,Confirm_Updates,logout
-QTML-T178,MYCL - ACCT - POSITIONS - Confirm_Values in Account Positions,p3_test_user,Twinl@kes01,Chrome,1RB10083,CA,*,*,MYCL_Login,Confirm_Values_in_Account_Positions,logout,*
-QTML-T180,BICL -  LOGO - Confirm that correct Logo displays,BETA_Test_User,Twinl@kes01,Chrome,*,*,INSIGHT,*,BICL_Login,Confirm_logo_displays,logout,*
-QTML-T193,BICL - ADMIN TOOL - USER ADMIN - Verify PASSWORD RESET Successful,Firelight_test_user,Twinl@kes01,Chrome,*,*,Twinl@kes01,*,BICL_Admin_Login,Password_update,login_BICL,before_logout
-QTML-T194,MYCL - GAIN & LOSS - Confirm Values in Price Column Display,p3_test_user,Twinl@kes01,Chrome,1LD53933,CA,*,*,MYCL_Login, Redirect to Client Link - Gain & Loss - Unrealized Summary,Gain & Loss - Unrealized Detail,Account - Positions
-QTML-T216,BICL - TOOLS - CLIENT SEARCH - TOTAL VALUE PANEL - Validate Total Value Panel,BETA_Test_User,Twinl@kes01,Chrome,80759293,KS,*,*,BICL_Login,input_rep_code,confirm_data_elements,logout
-QTML-T237,BICL - CERTIFICATE - Verify No Certificate Errors display,BETA_Test_User,Twinl@kes01,Chrome,80759293,*,*,*,BICL_Login,validate_no_certificate_errors,logout,*
+QTML-T4,BICL - ACCT TOOLBAR - SUMMARY - HAMBURGER-MENU BUTTON - REPORTS - Confirm Performance Report Displays,*,*,Chrome,80759293,CA,*,*,BICL_Login,select_reports,performance_report_screen,before_logout
+QTML-T5,BICL - ACCT TOOLBAR - SUMMARY - HAMBURGER-MENU BUTTON - FORMS LIBRARY - Confirm Forms Library Displays,*,*,Chrome,80759293,CA,*,*,BICL_Login,select_reports,forms_library_screen,before_logout
+QTML-T43,BICL - ACCT - ACCT INFO - DOCUMENTS - OPEN ORDER CONFIRMS - Confirm Open Order Confirms Display,*,*,Chrome,12244258,CA,*,*,BICL_Login,select_documents,open_order_confirms_screen,before_logout
+QTML-T44,BICL - ACCT - ACCT INFO - DOCUMENTS - TAX STATEMENTS - Confirm Tax Statements Display,*,*,Chrome,12244258,CA,*,*,BICL_Login,select_documents,tax_statements_screen,before_logout
+QTML-T45,BICL - ACCT - ACCT INFO - DOCUMENTS - MONTHLY STATEMENTS - Confirm Monthly Statements Display,*,*,Chrome,80759293,CA,*,*,BICL_Login,select_documents,monthly_statements_screen,before_logout
+QTML-T46,BICL - ACCT - ACCT INFO - DOCUMENTS - 401B Letters - Confirm 401B Letters Display,*,*,Chrome,80759293,CA,*,*,BICL_Login,select_documents,401B_Letters_screen,before_logout
+QTML-T47,BICL - ACCT - ACCT INFO - DOCUMENTS - SCANNED DOCUMENTS - Confirm Scanned Documents Display,*,*,Chrome,80759293,CA,*,*,BICL_Login,select_documents,scanned_documents_screen,before_logout
+QTML-T48,BICL - HOUSEKEEPING - DOCUMENTS - CONFIRMS - Confirm Confirms Document Display,*,*,Chrome,12244258,CA,*,*,BICL_Login,click_search,confirms_screen,before_logout
+QTML-T49,BICL - HOUSEKEEPING - DOCUMENTS - OPEN ORDER CONFIRMS - Confirm Open Order Confirms Display,*,*,Chrome,12244258,CA,*,*,BICL_Login,click_search,scanned_documents_screen,before_logout
+QTML-T50,BICL - HOUSEKEEPING - DOCUMENTS - TAX STATEMENTS - Confirm Tax Statements Display,*,*,Chrome,80759293,CA,*,*,BICL_Login,click_search,tax_statements_screen,before_logout
+QTML-T51,BICL - HOUSEKEEPING - DOCUMENTS - MONTHLY STATEMENTS - Confirm Monthly Statements Display,*,*,Chrome,80759293,CA,*,*,BICL_Login,click_search,monthly_statements_screen,before_logout
+QTML-T52,BICL - HOUSEKEEPING - DOCUMENTS - 401B Letters - Confirm 401B Letters Display,*,*,Chrome,80759293,CA,*,*,BICL_Login,click_search,401B_Letters_screen,before_logout
+QTML-T53,BICL - HOUSEKEEPING - DOCUMENTS - GMAP REPORTS - Confirm GMAP Reports Display,*,*,Chrome,80759293,CA,*,*,BICL_Login,click_search,GMAP_screen,before_logout
+QTML-T85,MYCL - ACCT - ACTIVITY - TRAILER - Confirm Trailer Column Displays,*,*,Chrome,80759001,CA,*,*,MYCL_Login,Verify Trailer Column,Logout,*
+QTML-T86,BICL - ACCT TOOLBAR - ACCT - NOTES - Confirm Notes not nested,*,*,Chrome,80759001,CA,*,*,BICL_Login_notes_modal_opened,App Rep Notes,Account_Notes,Activity_Notes
+QTML-T87,BICL - ACCT TOOLBAR - ACCT - NOTES - Confirm Note Fields correct,*,*,Chrome,80759001,CA,*,*,BICL_Login_notes_modal_opened,App Rep Notes,Account_Notes,Activity_Notes
+QTML-T88,BICL - ACCT TOOLBAR - SUMMARY - ACCT SEARCH - Confirm Correct Behavior on Account Search Modal,*,*,Chrome,80759001,CA,*,*,BICL_Login,account_search_modal_opened,security_description_tab_clicked,before_logout
+QTML-T100,BICL - ADMIN TOOL - USER ADMIN - Confirm User Account Updated,*,*,Chrome,80759293,CA,*,*,update_account,BICL Login,GMAP_confirm_update,logout
+QTML-T101,MYCL - TOOLS - HELP - SERVICE FEES - Confirm Fees Listed for Service Reorganization & CreditPlus,*,*,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS_HELP_confirm_fees_1st_section,confirm_fees_2nd_3rd_section,logout
+QTML-T156_a,BICL - TOOLS - USER ADMIN - Validate Firelight link displays,*,*,Chrome,80759293,KS,*,*,update_account,BICL Login,confirm_firelight_displays,logout
+QTML-T156_b,BICL - TOOLS - USER ADMIN - Validate Firelight link Not Present,*,*,Chrome,80759293,CA,*,*,update_account,BICL Login,confirm_firelight_not_present,logout
+QTML-T163,MYCL - TOOLS - WEDBUSH RESEARCH - Confirm redirection to site,*,*,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS,Navigate_to_WEDBUSH_RESEARCH,logout
+QTML-T164,MYCL - TOOLS - CALCULATORS - Confirm Screen Displays,*,*,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS,Navigate_to_CALCULATORS,logout
+QTML-T165,MYCL - TOOLS - QUOTES & CHARTS - Confirm Screen Displays,*,*,Chrome,*,*,*,*,MYCL_Login,Navigate_to_TOOLS,Navigate_to_QUOTES_CHARTS,logout
+QTML-T166,MYCL - DOCUMENTS - MONTHLY STATEMENTS - Confirm Screen Displays Successfully,*,*,Chrome,2FZ99992,CA,*,*,MYCL_Login,MONTHLY_STATEMENTS_screen,Logout,*
+QTML-T167,MYCL - DOCUMENTS - CONFIRMS - Confirm Screen Displays Successfully,*,*,Chrome,2FZ99992,CA,*,*,MYCL_Login,CONFIRMS_screen,Logout,*
+QTML-T168,MYCL - DOCUMENTS - TAX STATEMENTS - Confirm Screen Displays Successfully,*,*,Chrome,2FZ99992,CA,*,*,MYCL_Login,CONFIRMS_screen,Logout,*
+QTML-T169,MYCL - DOCUMENTS - SHAREHOLDER MATERIALS - Confirm Screen Displays Successfully,*,*,Chrome,2FZ99992,CA,*,*,MYCL_Login,CONFIRMS_screen,Logout,*
+QTML-T170,MYCL - DASHBOARD - ACCOUNT BALANCES - Confirm AS OF Fields filled,*,*,Chrome,80759293,CA,*,*,MYCL_Login,Account_Balances_screen,Logout,*
+QTML-T171,MYCL - DASHBOARD - ACCOUNT BALANCES - Confirm Spacing & Formatting Correct,*,*,Chrome,80759293,CA,*,*,MYCL_Login,Confirm_Spacing,logout,*
+QTML-T172,MYCL - PROFILE/PREFERENCES - USER PREFERENCES - SECURITY QUESTIONS - Confirm able to Submit Updates to SECURITY QUESTIONS,*,*,Chrome,*,CA,wedbush,blah,MYCL_Login,Update_Security_Questions,Confirm_Updates,logout
+QTML-T175,BICL - ORDER ENTRY - MUTUAL FUNDS - Confirm No Prompt after Order Confirmation,*,*,Chrome,80759293,CAIBX,*,*,BICL_Login,Confirm_Total_Value_Financial_Advisor_Fields,logout,*
+QTML-T176,MYCL - ACCT TOOLBAR - Confirm TOTAL VALUE & ACCOUNT # Display,*,*,Chrome,80759293,CA,*,*,MYCL_Login,Confirm_Total_Value_Financial_Advisor_Fields,logout,*
+QTML-T177,MYCL - PROFILE/PREFERENCES - USER PREFERENCES - CUSTOMIZE PAGE PREFERENCES - SAVE BUTTON - Confirm able to update Default Landing Page,*,*,Chrome,*,*,*,*,MYCL_Login,Update_Page_Preferences,Confirm_Updates,logout
+QTML-T178,MYCL - ACCT - POSITIONS - Confirm_Values in Account Positions,*,*,Chrome,1RB10083,CA,*,*,MYCL_Login,Confirm_Values_in_Account_Positions,logout,*
+QTML-T180,BICL -  LOGO - Confirm that correct Logo displays,*,*,Chrome,*,*,INSIGHT,*,BICL_Login,Confirm_logo_displays,logout,*
+QTML-T193,BICL - ADMIN TOOL - USER ADMIN - Verify PASSWORD RESET Successful,*,*,Chrome,*,*,Twinl@kes01,*,BICL_Admin_Login,Password_update,login_BICL,before_logout
+QTML-T194,MYCL - GAIN & LOSS - Confirm Values in Price Column Display,*,*,Chrome,1LD53933,CA,*,*,MYCL_Login, Redirect to Client Link - Gain & Loss - Unrealized Summary,Gain & Loss - Unrealized Detail,Account - Positions
+QTML-T216,BICL - TOOLS - CLIENT SEARCH - TOTAL VALUE PANEL - Validate Total Value Panel,*,*,Chrome,80759293,KS,*,*,BICL_Login,input_rep_code,confirm_data_elements,logout
+QTML-T237,BICL - CERTIFICATE - Verify No Certificate Errors display,*,*,Chrome,80759293,*,*,*,BICL_Login,validate_no_certificate_errors,logout,*
