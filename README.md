@@ -41,7 +41,7 @@
         control_point_3 = test_case_row['control_point_3'].values[0]
         control_point_4 = test_case_row['control_point_4'].values[0]
 
-(4) Pytest Mark - pytest.mark allows setting of metadata on test functions. Scripts with certain marker attributes (i.e., "smoke") can be invoked using the following command:
+(4) Pytest Mark - pytest.mark allows setting of metadata on test functions. Scripts with certain marker attributes (i.e., "smoke"). See example code below:
 
     @pytest.mark.smoke
     
