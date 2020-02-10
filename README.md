@@ -1,4 +1,4 @@
-# Automation Framework written in Python using a Page Object Framework
+# Automation Framework written in Python & using Selenium using a Page Object Model
 
 ## Key Features include
 
