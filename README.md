@@ -55,7 +55,7 @@
 
     pytest -m smoke --env UAT --alluredir=C:\test_results
 
-(7) Assert Statements - The following code validates that there are the correct number of decimals (2) in a certain column.
+(7) Assert Statements - The following code validates that there are the correct number of decimal places (2) in a certain column.
 
     def verify_decimals_in_margin_balance_total(self, test_case_ID, browser, env, time_stamp):
         rows = overview.Page_Elements(self).summary_of_accounts_table.find_elements(By.TAG_NAME, "tr")
