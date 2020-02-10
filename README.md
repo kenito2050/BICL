@@ -102,7 +102,7 @@
             driver.get_screenshot_as_file(saved_screenshot_location)
             raise
             
-(9) Iterate through a web table and fail if a value is NOT found - On the website in test, there are HTML tables with data. In the next code example, (a) there is a FOR loop that iterates through the HTML table (table is located using Xpath in the Page_Elements section) (b) and the code looks for the presence of a decimal point (.) in the text_found (which is in the Price column). If a decimal point is found, then values_filled becomes True. However, if no decimal point is found, then values_filled is False (which is the default value), an Assertion Error is thrown and a screen shot is taken.
+(9) Iterate through a web table and fail if a value is NOT found - On the website in test, there are HTML tables with data. In the next code example, (a) there is a FOR loop that iterates through the HTML table (table is located using Xpath in the Page_Elements section) (b) and the code looks for the presence of a decimal point (.) in the text_found (which is in the Price column). If a decimal point is found, then values_filled becomes True. However, if no decimal point is found, then values_filled remains False (which is the default value), an Assertion Error is thrown and a screen shot is captured.
 
 
     def Page_Elements(self):
